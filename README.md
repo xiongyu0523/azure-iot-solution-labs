@@ -26,14 +26,14 @@
 
 ## 实验指南
 
-- [实验场景、需求与架构分析]()
-- [实验硬件平台介绍与配置]()
-- [实验1：配置蜂窝网关接收数据IoT Hub]()
-- [实验2：使用Azure Function实现数据处理]()，
-- [实验3：使用Azure Cosmos DB存储时序数据]()
-- [实验4：使用API Management和Azure Funtion实现数据接口]()
-- [（可选）实验5：备份蜂窝网关原始数据到Blobstorage]()
-- [（可选）实验6：使用Service SDK API实现对设备的控制]()
+- [实验场景、需求与架构分析](scenario.md)
+- [实验硬件平台介绍与配置](hardware.md)
+- [实验1：配置蜂窝网关发送数据到Azure IoT Hub](lab1-iothub.md)
+- [实验2：使用Azure Function实现数据解析](lab2-function.md)，
+- [实验3：使用Azure Cosmos DB存储时序数据](lab3-cosmosdb.md)
+- [实验4：使用Azure API Management和Azure Funtion实现数据接口](lab4-apimgmt.md)
+- [（可选）实验5：备份蜂窝网关原始数据到Azure Blob Storage](lab5-blobstorage.md)
+- [（可选）实验6：使用Azure IoT SDK实现远程控制](lab6-iotsdk.md)
 
 ## 关于微软IoT
 
