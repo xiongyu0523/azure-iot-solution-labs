@@ -1,1 +1,1 @@
-# 实验2：使用Azure Function实现数据解析
+# 实验2：编写Function实现数据解析

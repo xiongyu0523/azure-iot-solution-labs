@@ -28,17 +28,17 @@
 
 - [实验场景、需求与架构分析](scenario.md)
 - [实验硬件平台介绍与配置](hardware.md)
-- [实验1：配置蜂窝网关发送数据到Azure IoT Hub](lab1-iothub.md)
-- [实验2：使用Azure Function实现数据解析](lab2-function.md)，
-- [实验3：使用Azure Cosmos DB存储时序数据](lab3-cosmosdb.md)
-- [实验4：使用Azure API Management和Azure Funtion实现数据接口](lab4-apimgmt.md)
-- [（可选）实验5：备份蜂窝网关原始数据到Azure Blob Storage](lab5-blobstorage.md)
-- [（可选）实验6：使用Azure IoT SDK实现远程控制](lab6-iotsdk.md)
+- [实验1：配置网关发送数据到IoT Hub](lab1-iothub.md)
+- [实验2：编写Function实现数据解析](lab2-function.md)
+- [实验3：存储时序数据到Cosmos DB](lab3-cosmosdb.md)
+- [实验4：使用API Management托管API](lab4-apimgmt.md)
+- [(可选) 实验5：备份原始数据到Blob Storage](lab5-blobstorage.md)
+- [(可选) 实验6：使用IoT SDK实现远程控制](lab6-iotsdk.md)
 
 ## 关于微软IoT
 
-微软Azure IoT物联网平台由一系列Azure托管的PaaS服务构成，同时提供安全防护、设备操作系统和边缘计算软件，用于连接、监控和管理十亿的规模级的IoT资产。微软Azure IoT拥有业界最全面的服务和技术能力来赋能客户的物联网应用，提供完整的从设备、边缘侧和云上的解决方案。
+[微软Azure IoT](https://azure.microsoft.com/en-us/overview/iot/)物联网平台由一系列Azure托管的PaaS服务构成，同时提供安全防护、设备操作系统和边缘计算软件，用于连接、监控和管理十亿的规模级的IoT资产。微软Azure IoT拥有业界最全面的服务和技术能力来赋能客户的物联网应用，提供完整的从设备、边缘侧和云上的解决方案。
 
 ## 关于南京理学
 
-南京理学工程数据技术有限公司是专业的物联网解决方案提供商。公司以理学为品牌，在工程机械、智慧城市、智慧物流等领域提供一体化的解决方案。南京理学构建了研发、生产、销售一体化的运营体系，拥有众多技术专利与知识产权。作为微软合作伙伴，南京理学的平台与物联网终端已经全面集成Azure IoT服务并实现商用，可为用户提供各类Azure IoT定制化软硬件解决方案。
+[南京理学工程数据技术有限公司](www.lektec.com)是专业的物联网解决方案提供商。公司以理学为品牌，在工程机械、智慧城市、智慧物流等领域提供一体化的解决方案。南京理学构建了研发、生产、销售一体化的运营体系，拥有众多技术专利与知识产权。作为微软合作伙伴，南京理学的平台与物联网终端已经全面集成Azure IoT服务并实现商用，可为用户提供各类Azure IoT定制化软硬件解决方案。

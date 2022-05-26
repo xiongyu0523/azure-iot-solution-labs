@@ -1,1 +1,1 @@
-# 实验4：使用Azure API Management和Azure Funtion实现数据接口
+# 实验4：使用API Management托管API
