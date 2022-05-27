@@ -2,7 +2,7 @@
 
 ## 🎯实验目的
 
-本节实验将通过IoT Hub DPS服务把蜂窝网关实验箱Provision到IoT Hub上，并配置网关device twin使能网关从CAN总线指定地址开始采集温湿度传感器原始数据到IoT Hub。为了验证数据是否已经成功达到IoT Hub, 实验使用Azure IoT Explorer工具获取原始数据进行测试。
+本节实验将通过IoT Hub DPS服务把蜂窝网关实验箱provision到IoT Hub上，并配置网关device twin使能网关从CAN总线指定地址开始采集温湿度传感器原始数据到IoT Hub。为了验证数据是否已经成功达到IoT Hub, 实验使用Azure IoT Explorer工具获取原始数据进行测试。
 
 ## 📑基础阅读
 
@@ -34,9 +34,9 @@ Azure IoT Explorer是一个跨平台的Azure IoT调试工具，它主要扮演�
 
 ### 2）创建IoT Hub与IoT Hub DPS
 
-1. 返回Azure Portal，左侧导航栏选择**Create a resource**，在**Internet of Things**分类中选择**IoT Hub**点击**Create**开启创建向导
+1. Azure Portal左侧导航栏选择**Create a resource**，在**Internet of Things**分类中选择**IoT Hub**点击**Create**开启创建向导
 2. **Resource group**选择资源组
-3. **IoT Hub name**输入一个独立无二的的名称，比如**iot-lab-hub-your-name**，最终这个名字会成为IoT Hub URL的前缀部分，最终完整的URL为：**iot-lab-your-name**.azure-devices.net
+3. **IoT Hub name**输入一个独立无二的的名称，比如**iot-lab-hub-your-name**，最终这个名字会成为IoT Hub URL的前缀部分，最终完整的URL为：**iot-lab-hub-your-name**.azure-devices.net
 4. **Region**选择**East Asia**
 5. 点击**Review + Create**->**Create**创建IoT Hub实例
 6. 回到**Internet of Things**分类中选择**IoT Hub Device Provisioning Service**点击**Create**开启创建向导
@@ -58,7 +58,9 @@ Azure IoT Explorer是一个跨平台的Azure IoT调试工具，它主要扮演�
 8. **IoT Edge Device**选择**False**
 9. **Certificate Type**选择**CA Certficiate**
 10. **Primary Certificate**下拉菜单中选择刚刚上传的根证书
-11. **Initial Device Twin State**中填写以下内容，以确保蜂窝网关注册到IoT Hub后能够默认开始从CAN总线上采集温湿度数据，以60秒的间隔发送到IoT Hub。
+11. **Select how you want to assign devices to hubs**选择**Static Conifguration**
+12. **Select the IoT hubs this group can be assigned to**选择上一步的IoT hub
+13. **Initial Device Twin State**中填写以下内容，以确保蜂窝网关注册到IoT Hub后能够默认开始从CAN总线上采集温湿度数据，以60秒的间隔发送到IoT Hub。
     
     ```
     {
@@ -67,7 +69,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT调试工具，它主要扮演�
             "desired": {
                 "devconfig": {
                     "devMsgInterval": 60,
-                    "canMsgInterval": 60,
+                    "canMsgInterval": 60
                 },
                 "canconfig": {
                     "type": "PGN",
@@ -81,15 +83,15 @@ Azure IoT Explorer是一个跨平台的Azure IoT调试工具，它主要扮演�
     }
     ```
 
-12. 其他配置保持默认，点击**Save**创建enrollment group
+14. **Enable entry**保持**Enable**，点击**Save**创建enrollment group
 
 ### 4）配置蜂窝网关连接IoT Hub
 
-这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS Scope ID，以确保设备能连接到上面创建的DPS服务实例。
+这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，以确保设备能连接到上面创建的DPS服务实例。
 
 1. 启动实验箱电源，连接PC到**AzLektec-XXX**的WiFi热点，密码为**azurelektec**
 2. 使用浏览器打开**192.168.4.1**进入配置网页服务器
-3. 在**Azure IoT DPS配置**中，填入**Scope ID**后点击**设置**，Scope ID可以在DPS服务的页面右侧找到。
+3. 在**Azure IoT DPS配置**中，填入**ID Scope**后点击**设置**，ID Scope可以在DPS服务的页面右侧找到。
 4. 关闭电源重启蜂窝网关。
 
 > 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，用户也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
