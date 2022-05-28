@@ -62,7 +62,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT调试工具，它主要扮演�
 12. **Select the IoT hubs this group can be assigned to**选择上一步的IoT hub
 13. **Initial Device Twin State**中填写以下内容，以确保蜂窝网关注册到IoT Hub后能够默认开始从CAN总线上采集温湿度数据，以60秒的间隔发送到IoT Hub。
     
-    ```
+    ```json
     {
         "tags": {},
         "properties": {
