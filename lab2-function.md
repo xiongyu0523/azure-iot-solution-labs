@@ -17,7 +17,7 @@
 ### 1）创建Function App
 
 1. Azure Portal左侧导航栏选择**Create a resource**，在**Computer**分类中选择**Function App**点击**Create**开启创建向导
-2. **Subscription**和**Resource group**分别选择自己的订阅上一个实验中创建的资源组
+2. **Subscription**和**Resource group**选择自己的订阅和实验1中创建的资源组
 3. **Function App name**输入一个独立无二的的名称，比如**iot-lab-function-your-name**，最终这个名字会成为Function App URL的前缀部分，最终完整的URL为：**iot-lab-function-your-name**.azurewebsites.net
 4. **Publish**选择**Code**
 5. **Runtime Stack**选择**Node.js**
@@ -29,6 +29,8 @@
 
 ### 2）创建并执行IoT hub Trigger Function
 
+Function App的binding功能支持IoT hub作为Trigger，可以非常方便的使用Azure Function作为IoT hub下游的数据处理引擎。在这一步中我们将使用Iot hub trigger binding实现将从内置Event hub endpoint中读取原始数据并作相应的处理和展示。
+
 1. 进入Function App服务，左侧导航栏选择**Functions**，点击**Create**
 2. 在打开的窗口中，选择**Develop in Portal**，**Template**选择**IoT Hub(Event Hub)**
 3. **New Function**输入一个Function App中独立无二的的名称
@@ -36,25 +38,25 @@
 5. **Consumer group**保持默认的$Default
 6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**，默认只是将收到的消息记录到日志。
 
-```javascript
-// Javascript Function使用module.exports声明入口
-// context参数总是作为第一个参数
-// IoTHubMessages是按照function.json中binding的配置和顺序来命名的
-module.exports = function (context, IoTHubMessages) {
-    
-    //记录日志到Appliation Insight
-    context.log(`JavaScript eventhub trigger function called for message array: ${IoTHubMessages}`);
-    
-    // 当Function配置支持多个消息打包为一条消息触发时，IoTHubMessages是一个[]数组对象
-    // forEach接收一个回调函数，message => {}是匿名箭头函数内联写法，表示该函数拥有一个message参数
-    IoTHubMessages.forEach(message => {
-        context.log(`Processed message: ${message}`);
-    });
+    ```javascript
+    // Javascript Function使用module.exports声明入口
+    // context参数总是作为第一个参数
+    // IoTHubMessages是按照function.json中binding的配置和顺序来命名的
+    module.exports = function (context, IoTHubMessages) {
+        
+        //记录日志到Appliation Insight
+        context.log(`JavaScript eventhub trigger function called for message array: ${IoTHubMessages}`);
+        
+        // 当Function配置支持多个消息打包为一条消息触发时，IoTHubMessages是一个[]数组对象
+        // forEach接收一个回调函数，message => {}是匿名箭头函数内联写法，表示该函数拥有一个message参数
+        IoTHubMessages.forEach(message => {
+            context.log(`Processed message: ${message}`);
+        });
 
-    // 在Function v1.x runtime中指示函数结束
-    context.done();
-};
-```
+        // 在Function v1.x runtime中指示函数结束
+        context.done();
+    };
+    ```
 
 
 6. 在左侧**Developer**导航栏中点击**Monitor**，在展开的页面**Invocation**可以看到Function被调用的记录和成功与否的状态。选择**Logs**，可以看到类似日志：
