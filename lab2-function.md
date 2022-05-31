@@ -2,21 +2,45 @@
 
 ## 🎯实验目的
 
-本节实验将使用Azure Function App处理蜂窝网关上传到IoT Hub的原始数据，根据其CAN协议解析成可读的格式，同时获取device id为后面存储到数据库作准备。
+本节实验将学习Azure Function App基础知识，在Azure Portal上使用javascript编写一个Function处理蜂窝网关上传到IoT Hub的原始数据，根据CAN协议解析成可读的格式，同时通过获取device id为后面存储到数据库作准备。
 
 ## 📑基础阅读
 
-### ❔什么是Azure Function
+### ❔Serverless无服务架构
 
-### ❔什么是Binding
+在云原生架构设计演进的过程上，事件驱动和函数既应用（FaaS，Function As a Service）的编程模式是一个热门的方向和分支，也可以称为Serverless无服务架构。这种模式充分利用现代容器技术和云平台提供的能力，让开发者只需关注核心业务逻辑的实现，省去基础设施和高可用等复杂又无法为业务增值的工作，同按需分配和使用云资源的运行方式，可以在有效降低成本的同时还能获得很好的弹性。无服务设计模式是平台既应用（PaaS，Platform As a Service）的最佳伙伴，通过平台提供的各种触发器和内置的连接能力，用户仅在他们关心的事件和数据产生的时刻才介入，编写一个无状态、单一功能的函数，实现具体的业务逻辑。
 
-### ❔一个Function的基本结构
+> 💡无服务设计模式也不是所有场景都有优势，对于需要长时间运行的逻辑代码、依赖于内部状态进行处理的应用，以及冷启动有极短需求的情况，使用传统的长时间运行的计算服务可能更合适。
+
+> 💡PaaS + FaaS的设计模式很适合专注于实现业务增值的IoT开发者。他们的技术背景可能偏硬件和嵌入式系统设计，而非IT或者云计算领域，使用这样的搭配可以快速实现满足业务需求，又能满足规模化部署的
+
+### ❔什么是Azure Function App
+
+Azure Function App是在上Azure上实现无服务架构的核心服务，它与Azure其他服务紧密集成，通常作为下游处理引擎处理具体的业务，比如Web API后端实现，文件上传后的处理，响应数据库更改，计划任务定时运行和IoT hub数据流转换等场景都可以使用Function App来完成。
+
+Function App Runtime支持在Windows或者Linux操作系统，用户可以使用C#、Java、JavaScript、Python和PowerShell编写自己的代码，甚至通过custom handler使用其他不被原生支持的语言，比如Go和Rust。
+
+Function App支持在Portal上直接开发，也提供完整的、基于vscode的扩展工具让用户在本地进行代码的开发和测试，借助这些工具，编写和调试Function跟传统的软件开发体验几乎没有区别。用户只要点击一个PUBLISH按钮，就可以同步&部署到Azure云端。
+
+> 💡本实验为了减少安装工具带来的麻烦，选择直接在Portal上进行开发。但是在实际的应用中，绝大部分用户都将使用我们提供的工具和扩展在本地开发
+
+### ❔什么是Trigger和Binding
+
+### ❔Function的基本结构
+
+不同语言的Function的组成结构略有不同，本实验j将使用javascript/node.js进行开发，这里的解释仅针对javascript/node.js的环境。
+
+```
+- Function App
+
+```
 
 ## 🧪实验步骤
 
 ### 1）创建Function App
 
 1. Azure Portal左侧导航栏选择**Create a resource**，在**Computer**分类中选择**Function App**点击**Create**开启创建向导
+
 2. **Subscription**和**Resource group**选择自己的订阅和实验1中创建的资源组
 3. **Function App name**输入一个独立无二的的名称，比如**iot-lab-function-your-name**，最终这个名字会成为Function App URL的前缀部分，最终完整的URL为：**iot-lab-function-your-name**.azurewebsites.net
 4. **Publish**选择**Code**

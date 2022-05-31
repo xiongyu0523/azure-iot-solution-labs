@@ -66,7 +66,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 3. 回到IoT Hub DPS服务，左侧导航栏选择**Certificates**，点击**Add**
 
-4. 在打开的窗口中，**Certificate name**填写一个在当前DPS中独一无二的的名称，比如`iot-lab-root`，选择实验指南根本目录下的`resources/root.pem`证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书。
+4. 在打开的窗口中，**Certificate name**填写一个在当前DPS中独一无二的的名称，比如`iot-lab-root`，选择实验指南根本目录下的[root.pem](resources/root.pem)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书。
 
    > 💡勾选**Set certificate status to verified on upload**省略随机数密钥挑战的步骤，但这样做法需要用户确认上传证书的是可信的。
 
@@ -116,9 +116,9 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，使设备能连接到上一步创建的IoT hub DPS服务。
 
-1. 启动实验箱电源，连接PC到**AzLektec-XXX**的WiFi热点，密码为**azurelektec**
+1. 启动实验箱电源，连接PC到`AzLektec-XXX`的WiFi热点，密码为`azurelektec`
 
-2. 使用浏览器打开**192.168.4.1**进入配置网页服务器
+2. 使用浏览器打开`192.168.4.1`进入配置网页服务器
 
 3. 在**Azure IoT DPS配置**中，填入**ID Scope**后点击**设置**，ID Scope可以在DPS服务的页面右侧找到，比如`0ne0061ABC8`
 
