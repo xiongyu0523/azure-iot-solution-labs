@@ -50,7 +50,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 6. 回到**Internet of Things**分类中选择**IoT Hub Device Provisioning Service**点击**Create**开启创建向导
 
-7. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组。
+7. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
 
 8. **Name**输入一个独立无二的的名称，比如`iot-lab-dps-<your-name>`，它会成为IoT hub DPS URL的前缀：`iot-lab-dps-<your-name>.azure-devices-provisioning.net`
 
@@ -114,7 +114,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 ### 4）配置蜂窝网关连接IoT Hub
 
-这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，使设备能连接到上一步创建的IoT hub DPS服务。
+这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，使设备能连接到上一步创建的IoT hub DPS服务
 
 1. 启动实验箱电源，连接PC到`AzLektec-XXX`的WiFi热点，密码为`azurelektec`
 
@@ -128,17 +128,15 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 ### 5）使用Azure IoT Explorer获取原始数据
 
-在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放，用户可以使用Azure IoT Explorer调试工具观察蜂窝网关发送的原始数据。
+在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放，用户可以使用Azure IoT Explorer调试工具观察蜂窝网关发送的原始数据
 
-1. 打开创建的IoT Hub，左侧导航栏中点开**Security Settings**类别中的**Shared access polices**，在右侧打开的界面中点击**iothubowner** Policy Name，复制第三行**Primary conneciton string**。
+1. 打开创建的IoT Hub，左侧导航栏中点开**Security Settings**类别中的**Shared access polices**，在右侧打开的界面中点击**iothubowner** Policy Name，复制第三行**Primary conneciton string**
 
-2. 打开本地安装好的Azure IoT Explorer工具，点击**Add connection**，将上一步复制的内容贴到对话框中，点击**Save**保存。
+2. 打开本地安装好的Azure IoT Explorer工具，点击**Add connection**，将上一步复制的内容贴到对话框中，点击**Save**保存
 
-3. 在打开的设备列表中找到并点击上一步通过IoT Hub DPS服务注册到IoT Hub中的设备，在左侧导航栏点击第三行**Telemetry**，再点击右边**Start**开始从IoT Hub内置的Event Hub中获取新发送上来的数据。
+3. 在打开的设备列表中找到并点击上一步通过IoT Hub DPS服务注册到IoT Hub中的设备，在左侧导航栏点击第三行**Telemetry**，再点击右边**Start**开始从IoT Hub内置的Event Hub中获取新发送上来的数据
 
-4. 等待一会界面上将开始刷收到的原始数据。
-
-    ![](images/explorer.jpg)
+4. 等待一会界面上将开始刷收到的原始数据
 
 ## 📚扩展阅读
 
