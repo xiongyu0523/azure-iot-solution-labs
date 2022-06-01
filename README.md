@@ -1,5 +1,7 @@
 # Azure IoT 解决方案实战训练营指南💻🌏︎🚚
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Chinese](https://img.shields.io/badge/Lanuage-Chinese-yellow)](translations/README.zh-cn.md) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](http://makeapullrequest.com)
+
 ![](images/header.jpg)
 
 ## 🚀训练营特色

@@ -47,7 +47,26 @@ Function App支持在Portal上直接开发，也提供完整的、基于vscode�
 
 Trigger即触发器，这个很好理解，它定义了一个Function是因为一些什么样的事件发生而被系统调用。每个Function有且只有一个Trigger，Trigger通常也会带有数据作为参数传递给函数。
 
-Binding则有趣许多，使用用一种声明的方式，描述Function与其他Azure服务之间输入和输出的数据关联，所以也就存在Input binding和Output binding。Input binding为Function提供数据，比如Azure Blob Storage支持Input binding，把文件作为参数传递进Function，省去了在Function中使用Blob SDK或者REST API去读取的麻烦。同样Output binding将Function中的数据写入到其他服务，比如写入数据库一条record，用户不需要在Function内部集成odbc和写SQL语句，直接通过特定参数或者return返回值，由binding来帮助完成实际的写入步骤。
+Binding则有趣许多，使用用一种声明的方式，描述Function与其他Azure服务之间输入和输出的关系和他们之间的数据交互。Binding分为Input binding和Output binding。Input binding为Function提供数据，比如Azure Blob Storage支持Input binding，binding会帮用户把文件从blob中取出来作为参数传递进Function，省去了在Function中使用SDK或者REST API去读取的麻烦。同样Output binding将Function中的数据写入到其他服务，比如往数据库写入一条record，用户不需要在Function内部集成odbc和写SQL语句，直接通过特定参数或者return返回值，由binding来帮助完成实际的写入步骤。
+
+Trigger和Binding的声明在function.json中，下面示例是一个我们接下来实验中Portal帮我们自动创建的文件，注释部分包含了一些必要的解释：
+
+```json
+{
+    "bindings": [{
+        "type": "eventHubTrigger",      // 表明这是一个event hub trigger
+        "name": "IoTHubMessages",       // 字符串将作为第二个参数传入Function
+        "direction": "in",             
+        "eventHubName": "iot-lab-hub-<your-name>",   
+        "connection": "iot-lab-hub-<your-name>_events_IOTHUB",   // 连接IoT hub内置Event hub的connection string环境变量
+        "cardinality": "many",          // many表示一次触发可以是包含了多条数据，one表示一次触发一条数据
+        "consumerGroup": "$Default",    // 使用哪一个消费组读取，消费组可以在IoT Hub endpoint中配置
+        "dataType": "string"
+    }]
+}
+```
+
+支持的
 
 ## 🧪实验步骤
 
@@ -125,8 +144,7 @@ Function App的Binding支持IoT hub作为Trigger，用户可以非常方便的�
 ```json
 {
     "common": {
-        "tsp": [],
-        "gnss": {}
+        "gnss": { "lon": 24.12, "lat": 212.00 }
     },
     "type": "cycCan",
     "payload": {
