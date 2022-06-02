@@ -9,7 +9,7 @@
 
 
 
-[![](G:\Azure\azure-iot-solution-labs\images\硬件平台示意图.jpg)](https://github.com/xiongyu0523/azure-iot-solution-labs/blob/main/images/%E7%A1%AC%E4%BB%B6%E5%B9%B3%E5%8F%B0%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg)
+![硬件平台示意图](https://github.com/xiongyu0523/azure-iot-solution-labs/blob/main/images/%E7%A1%AC%E4%BB%B6%E5%B9%B3%E5%8F%B0%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg)
 
 
 
