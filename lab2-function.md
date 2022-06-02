@@ -45,28 +45,39 @@ Function App支持在Portal上直接开发，也提供完整的、基于vscode�
 
 ### ❔什么是Trigger和Binding
 
-Trigger即触发器，这个很好理解，它定义了一个Function是因为一些什么样的事件发生而被系统调用。每个Function有且只有一个Trigger，Trigger通常也会带有数据作为参数传递给函数。
+Trigger即触发器，这个容易理解，它用声明的方式描述了一个Function是因为一些什么样的事件发生而被系统调用。每个Function有且只有一个Trigger，Trigger通常也会带有数据作为参数传递给函数。
 
-Binding则有趣许多，使用用一种声明的方式，描述Function与其他Azure服务之间输入和输出的关系和他们之间的数据交互。Binding分为Input binding和Output binding。Input binding为Function提供数据，比如Azure Blob Storage支持Input binding，binding会帮用户把文件从blob中取出来作为参数传递进Function，省去了在Function中使用SDK或者REST API去读取的麻烦。同样Output binding将Function中的数据写入到其他服务，比如往数据库写入一条record，用户不需要在Function内部集成odbc和写SQL语句，直接通过特定参数或者return返回值，由binding来帮助完成实际的写入步骤。
+Binding稍微难理解一点，它同样是使用声明的方式描述了Function与其他Azure服务之间数据输入和输出的关系。Binding分为Input binding和Output binding。
 
-Trigger和Binding的声明在function.json中，下面示例是一个我们接下来实验中Portal帮我们自动创建的文件，注释部分包含了一些必要的解释：
+- Input binding为Function提供数据。比如Azure Blob Storage支持Input binding，binding会帮用户把文件从blob中取出来作为参数传递进Function，省去了在Function中使用SDK或者REST API去读取的麻烦。
+
+- Output binding将Function中的数据传入到其他服务。比如往数据库写入一条record，用户不需要在Function内部集成odbc和写SQL语句，直接通过特定参数或者return返回值，由binding来帮助完成实际的写入步骤。
+
+Trigger和Binding的声明写每个Function文件夹下的function.json中，下面示例是一个接下来实验中Portal自动创建的Function.js，它定义了一个IoT hub trigger，其中一些重要字段的解释如下：
 
 ```json
 {
     "bindings": [{
-        "type": "eventHubTrigger",      // 表明这是一个event hub trigger
-        "name": "IoTHubMessages",       // 字符串将作为第二个参数传入Function
+        "type": "eventHubTrigger",
+        "name": "IoTHubMessages",
         "direction": "in",             
         "eventHubName": "iot-lab-hub-<your-name>",   
-        "connection": "iot-lab-hub-<your-name>_events_IOTHUB",   // 连接IoT hub内置Event hub的connection string环境变量
-        "cardinality": "many",          // many表示一次触发可以是包含了多条数据，one表示一次触发一条数据
-        "consumerGroup": "$Default",    // 使用哪一个消费组读取，消费组可以在IoT Hub endpoint中配置
-        "dataType": "string"
+        "connection": "iot-lab-hub-<your-name>_events_IOTHUB",
+        "cardinality": "many",
+        "consumerGroup": "$Default",
     }]
 }
 ```
 
-支持的
+|字段|含义|
+|---|---|
+|**type**|字符串表示该Trigger或者Binding的类型，具体支持哪些类型可以参考这个[表格](https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings?tabs=csharp#supported-bindings)|
+|**name**|字符串表示变量名，将作为参数传入Function。当存在多个Binding时，按照他们声明的顺序传递|
+|**direction**|Trigger和Input binding是**in**，Output binding是**out**|
+|**connection**|字符串是该Binding连接服务的connection string变量名，它的值存储在applciation settings中|
+|**cardinality**|一个IoT hub/Event hub Trigger特有的字段，`many`表示一次触发可以是包含了多条数据，此时IoTHubMessages参数是一个Array类型，每个元素都是一个JSON字符串。`one`表示一次触发只包喊一条数据，此时IoTHubMessages是一个被parse后的对象|
+|**consumerGroup**|一个IoT hub/Event hub Trigger特有的字段，告诉Binding从哪一个消费组中读取消息，消费组可以在[IoT Hub endpoint](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-read-builtin)页面配置|
+
 
 ## 🧪实验步骤
 
@@ -106,7 +117,7 @@ Function App的Binding支持IoT hub作为Trigger，用户可以非常方便的�
 
 5. **Consumer group**保持默认的`$Default`
 
-6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**，默认的代码只是将收到的消息记录到Application Insight日志中。下面是代码的基本结构和注释：
+6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**和自动被创建的**function.json**，默认的代码只是将收到的消息记录到Application Insight日志中。下面是代码的基本结构和注释：
 
     ```javascript
     // Javascript Function使用module.exports声明入口
@@ -181,7 +192,7 @@ module.exports = async function (context, IoTHubMessages) {
     });
 
     // Function v2.x后的runtime使用async函数，无需在结束的位置调用context.done()
-}
+};
 ```
 
 正常执行可看到如下日志：
@@ -206,7 +217,7 @@ module.exports = async function (context, IoTHubMessages) {
         const deviceid = context.bindingData.systemPropertiesArray[index]['iothub-connection-device-id'];
         context.log(`Message ${index} is from ${deviceid}`)
     })
-}
+};
 ```
 
 正常执行可看到如下日志：
