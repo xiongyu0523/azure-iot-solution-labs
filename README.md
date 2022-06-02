@@ -1,5 +1,7 @@
 # Azure IoT 解决方案实战训练营指南💻🌏︎🚚
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Chinese](https://img.shields.io/badge/Lanuage-Chinese-yellow)](translations/README.zh-cn.md) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](http://makeapullrequest.com)
+
 ![](images/header.jpg)
 
 ## 🚀训练营特色
@@ -35,10 +37,10 @@
 - [(可选) 实验5：备份原始数据到Blob Storage](lab5-blobstorage.md)
 - [(可选) 实验6：使用IoT SDK实现远程控制](lab6-iotsdk.md)
 
-## ♾关于微软IoT
+## 🌐关于微软IoT
 
 [微软Azure IoT](https://azure.microsoft.com/en-us/overview/iot/)物联网平台由一系列Azure托管的PaaS服务构成，同时提供安全防护、设备操作系统和边缘计算软件，用于连接、监控和管理十亿的规模级的IoT资产。微软Azure IoT拥有业界最全面的服务和技术能力来赋能客户的物联网应用，提供完整的从设备、边缘侧和云上的解决方案。
 
-## ♾关于南京理学
+## 🌐关于南京理学
 
 [南京理学工程数据技术有限公司](www.lektec.com)是专业的物联网解决方案提供商。公司以理学为品牌，在工程机械、智慧城市、智慧物流等领域提供一体化的解决方案。南京理学构建了研发、生产、销售一体化的运营体系，拥有众多技术专利与知识产权。作为微软合作伙伴，南京理学的平台与物联网终端已经全面集成Azure IoT服务并实现商用，可为用户提供各类Azure IoT定制化软硬件解决方案。
