@@ -19,5 +19,5 @@ LEKTEC Azure T-BOX是一款通用T-BOX产品。该款产品实现了Azure DPS，
 
 ![]()
 
-![Azure T-BOX介绍](G:\Azure\azure-iot-solution-labs\images\Azure T-BOX介绍.jpg)
+![Azure T-BOX介绍](https://github.com/xiongyu0523/azure-iot-solution-labs/blob/main/images/Azure%20T-BOX%E4%BB%8B%E7%BB%8D.jpg)
 
