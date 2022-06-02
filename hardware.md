@@ -1,4 +1,4 @@
-# 实验硬件平台介绍与配置
+# 实验硬件平台介绍
 
 ![](images/tbox.png)
 
@@ -7,6 +7,8 @@
 LEKTEC Azure T-BOX是一款通用目的蜂窝网关T-BOX，内置eSIM支持4G LTE CAT-1全网通，支持GNSS定位和灵活可定制的CAN总线网络采集策略。用户可以根据自己对CAN网络的采集需求进行配置，实现对不同ID、不同数据类型CAN节点采集的应用。
 
 Azure T-BOX是一个开箱即用的商业级蜂窝物联网网关产品。它通过了Azure IoT设备认证，用户可以通过其内置的WiFI热点和Webserver配置ID Scope、X509证书和私钥，通过Azure IoT Hub DPS服务接入到自己的IoT Hub节点。
+
+### 详细硬件参数
 
 ![](images/spec.png)
 
@@ -21,7 +23,7 @@ Azure T-BOX是一个开箱即用的商业级蜂窝物联网网关产品。它通
 
 ## 联络与采购
 
-|||
+|联络方式|信息|
 |---|---|
 |官网|www.lektec.com|
 |电话|025-68093711|

@@ -67,19 +67,14 @@ Function App的binding功能支持Cosmos DB Trigger/Input/Output，大大简化�
 
 ```json
 {
-    "bindings": [
-        {
-            // eventHubTrigger相关配置
-        }
-        {
-            "type": "cosmosDB",
-            "name": "outputDocument",
-            "direction": "out",
-            "connectionStringSetting": "iot-lab-cosmosdb-<your-name>_DOCUMENTDB",
-            "databaseName": "mydatabase",
-            "collectionName": "mycontainer"
-        }
-    ]
+    "bindings": [{
+        "type": "cosmosDB",
+        "name": "outputDocument",
+        "direction": "out",
+        "connectionStringSetting": "iot-lab-cosmosdb-<your-name>_DOCUMENTDB",
+        "databaseName": "mydatabase",
+        "collectionName": "mycontainer"
+    }]
 }
 ```
 
@@ -134,30 +129,30 @@ module.exports = async function (context, IoTHubMessages) {
 
 1. 进入Cosmos DB Account，左侧导航栏选择**Data Explorer**，在Explorer窗口找到建立好的**database/container/items**目录，默认会运行一条**SELECT * FROM c**的语句列出所有的item，点击任意的item可以查看JSON文档的内容，
 
-```
-{
-    "deviceid": "a22210001",
-    "arrived": "2022-06-02T09:08:09.318Z",
-    "temperature": 28.79,
-    "humidity": 82.92,
-    "id": "fc871121-199d-444f-8d97-77a21cc00924",
-    "_rid": "YKI9ANj-mBMBAAAAAAAAAA==",
-    "_self": "dbs/YKI9AA==/colls/YKI9ANj-mBM=/docs/YKI9ANj-mBMBAAAAAAAAAA==/",
-    "_etag": "\"fa05a828-0000-1900-0000-62987e530000\"",
-    "_attachments": "attachments/",
-    "_ts": 1654160979
-}
-```
+    ```
+    {
+        "deviceid": "a22210001",
+        "arrived": "2022-06-02T09:08:09.318Z",
+        "temperature": 28.79,
+        "humidity": 82.92,
+        "id": "fc871121-199d-444f-8d97-77a21cc00924",
+        "_rid": "YKI9ANj-mBMBAAAAAAAAAA==",
+        "_self": "dbs/YKI9AA==/colls/YKI9ANj-mBM=/docs/YKI9ANj-mBMBAAAAAAAAAA==/",
+        "_etag": "\"fa05a828-0000-1900-0000-62987e530000\"",
+        "_attachments": "attachments/",
+        "_ts": 1654160979
+    }
+    ```
 
-> 💡从**id**开始往下的都是系统自动添加的字段，比如_ts是存入Cosmos DB的时间，_etag用作并发控制目的，他们都是由Cosmos DB服务端维护并更新的。
+    > 💡从**id**开始往下的都是系统自动添加的字段，比如_ts是存入Cosmos DB的时间，_etag用作并发控制目的，他们都是由Cosmos DB服务端维护并更新的。
 
 2. 在Data Expolrer中点击**Edit Filter**按钮展开SQL语句WHERE子句部分编辑窗口，尝试的一些下面SQL语句查询一段时间内的遥测数据文档。
 
-```sql
-SELECT * FROM c WHERE c.deviceid = "<your-deviceid>" AND (c.arrived between "<start-time>" AND "<end-time>")
-```
+    ```sql
+    SELECT * FROM c WHERE c.deviceid = "<your-deviceid>" AND (c.arrived between "<start-time>" AND "<end-time>")
+    ```
 
-> 💡以上分别是查询Cosmos DB的两种数据读取方式，通过REST API单点读和SQL查询批量读取，他们的应用场景不同，消耗的RU也是不同的，大多数的重在读取的应用会结合两者进行，以平衡成本和效能。
+    > 💡以上分别是查询Cosmos DB的两种数据读取方式，通过REST API单点读和SQL查询批量读取，他们的应用场景不同，消耗的RU也是不同的，大多数的重在读取的应用会结合两者进行，以平衡成本和效能。
 
 ## 📚扩展阅读
 
