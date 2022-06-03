@@ -31,11 +31,12 @@
 - [实验场景、需求与架构分析](architecture.md)
 - [实验硬件平台介绍](hardware.md)
 - [实验1：配置网关发送数据到IoT Hub](lab1-iothub.md)
-- [实验2：编写Function实现数据解析](lab2-function.md)
-- [实验3：存储时序数据到Cosmos DB](lab3-cosmosdb.md)
-- [实验4：使用API Management托管API](lab4-apimgmt.md)
-- [(可选) 实验5：备份原始数据到Blob Storage](lab5-blobstorage.md)
-- [(可选) 实验6：使用IoT SDK实现远程控制](lab6-iotsdk.md)
+- [(可选) 实验2：备份原始数据到Blob Storage](lab2-blobstorage.md)
+- [实验3：编写Function实现数据解析](lab3-function.md)
+- [实验4：存储时序数据到Cosmos DB](lab4-cosmosdb-in.md)
+- [实验5：使用HTTP查询Cosmos DB](lab5-cosmosdb-out.md)
+- [(可选) 实验6：使用API Management托管API](lab6-apimgmt.md)
+- [实验7：增加IoT SDK实现远程控制](lab7-iotsdk.md)
 
 ## 🌐关于微软IoT
 

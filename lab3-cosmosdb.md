@@ -49,21 +49,23 @@ Cosmos DB是一个
 
 4. **Partition Key**输入 `/deviceid`，点击**OK**创建Container
 
-### 3）配置Cosmos DB Output binding
+### 3）增加Cosmos DB Output binding
 
-Function App的binding功能支持Cosmos DB Trigger/Input/Output，大大简化了开发者的Function代码。在这一步中我们将使用Cosmos DB Output binding实现将温湿度和deviceid写入数据库。
+Function App的binding功能支持Cosmos DB Trigger/Input/Output，大大简化了开发者的Function代码。在这一步中将使用Cosmos DB Output binding实现将温湿度和deviceid写入数据库。
 
 1. 回到上一步创建的Function中，在左侧导航栏选择**Integration**
 
 2. **Outputs**点击**Add Output**
 
-3. **Binding Type**选择**Azure Cosmos DB**
+3. **Binding Type**选择`Azure Cosmos DB`
 
-4. **Cosmos DB account connection**点击**New**，在窗口中选择刚刚创建的Cosmos DB Account，点击**OK**新建一个连接。
+4. **Cosmos DB account connection**点击**New**，在窗口中选择刚刚创建的Cosmos DB Account，点击**OK**新建一个连接
 
-5. **database name**和**Collection Name**分别输入上一步创建的**database id** `mydatabse`和**container id** `mycontainer`，点击**OK**创建binding。
+5. **document parameter name** 保持`outputDocument`
 
-> 💡在Portal上配置binding实质上是通过GUI编写function.json文件，进入**Code+Test**页面选择function.json源码文件，可以看到上一个实验中我们用向导新建的IoT hub trigger binding和本实验创建Cosmos DB Output binding的详细配置：
+6. **database name**和**Collection Name**分别输入上一步创建的`mydatabase`和`mycontainer`，点击**OK**创建binding
+
+> 💡在Portal上配置binding实质上是通过GUI编写function.json文件，进入**Code+Test**页面选择function.json源码文件，可以看到上一个实验中用向导新建的IoT hub trigger和本实验创建Cosmos DB Output binding的详细配置：
 
 ```json
 {
@@ -100,11 +102,11 @@ module.exports = async function (context, IoTHubMessages) {
     IoTHubMessages.forEach((message, index) => {
         const parsed = JSON.parse(message);
         if (parsed.type === 'cycCan') {
-            const temperature = Number('0x' + parsed.payload.c1.substring(6, 10)) * 0.01;
-            const humidity = Number('0x' + parsed.payload.c1.substring(10, 14)) * 0.01;
+            const temperature = Number('0x' + parsed.payload.c1.substring(6, 10)) / 100;
+            const humidity = Number('0x' + parsed.payload.c1.substring(10, 14)) / 100;
             const deviceid = context.bindingData.systemPropertiesArray[index]["iothub-connection-device-id"];
             const arrived = context.bindingData.systemPropertiesArray[index]["iothub-enqueuedtime"];
-            // 按照我们定义的schema构造对象
+            // 按照定义的schema构造对象
             const item = {
                 deviceid: deviceid,
                 arrived: arrived,

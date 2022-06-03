@@ -105,19 +105,19 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 
 ### 2）创建并执行IoT hub Trigger Function
 
-Function App的Binding支持IoT hub作为Trigger，用户可以非常方便的使用Azure Function作为IoT hub下游的数据处理引擎。在这一步中我们将使用IoT hub trigger 实现触发Function调用并将从内置Event hub endpoint中读取原始数据作处理和展示。
+Function App binding支持IoT hub作为Trigger，用户可以非常方便的使用Azure Function作为IoT hub下游的数据处理引擎。在这一步中我们将使用IoT hub trigger 实现触发Function调用并将从内置Event hub endpoint中读取原始数据作处理和展示。
 
 1. 进入Function App服务，左侧导航栏选择**Functions**，点击**Create**
 
 2. 在打开的窗口中，选择`Develop in Portal`，**Template**选择`IoT Hub(Event Hub)`
 
-3. **New Function**输入一个该Function App中独立无二的的名称，比如IoTHub
+3. **New Function**输入一个该Function App中独立无二的的名称，比如`func_iothub`
 
 4. **事件中心连接**处点击**New**，点击**IoT Hub**分类选择上一个实验创建的IoT Hub实例，下面选择`Events(built-in endpoint)`，点击**OK**
 
 5. **Consumer group**保持默认的`$Default`
 
-6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**和自动被创建的**function.json**，默认的代码只是将收到的消息记录到Application Insight日志中。下面是代码的基本结构和注释：
+6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**和**function.json**，默认的代码只是将收到的消息记录到Application Insight日志中。下面是代码的基本结构和注释：
 
     ```javascript
     // Javascript Function使用module.exports声明入口
@@ -175,7 +175,6 @@ Function App的Binding支持IoT hub作为Trigger，用户可以非常方便的�
 本节重新编写Function的代码，根据协议解析转换原始数据为浮点数据。把下面代码复制粘贴到**index.js**中点击**Save**，界面下方自动显示log日志窗口，稍等片刻观察结果。
 
 ```javascript
-
 // Function v2.x后的runtime推荐使用async函数，且无需在结束的位置调用context.done()
 module.exports = async function (context, IoTHubMessages) {
 
@@ -184,8 +183,8 @@ module.exports = async function (context, IoTHubMessages) {
         const parsed = JSON.parse(message);
         if (parsed.type === 'cycCan') {
             // substring返回一个范围为[indexStart, indexEnd)字符串
-            const temperature = (Number('0x' + parsed.payload.c1.substring(6, 10)) * 0.01).toFixed(2);
-            const humidity = (Number('0x' + parsed.payload.c1.substring(10, 14)) * 0.01).toFixed(2);
+            const temperature = Number('0x' + parsed.payload.c1.substring(6, 10)) / 100;
+            const humidity = Number('0x' + parsed.payload.c1.substring(10, 14)) / 100;
 
             context.log(`Temperature = ${temperature}, Humidity = ${humidity}`);
         }
