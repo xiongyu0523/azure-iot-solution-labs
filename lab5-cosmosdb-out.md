@@ -1,14 +1,8 @@
-# 实验4：使用API Management托管API
+# 实验5：使用HTTP查询Cosmos DB
 
 ## 🎯实验目的
 
-本节实验将学习Azure Cosmos DB的基础概念，从IoT应用的数据特点开始，分析并理解为什么Cosmos DB是IoT场景下的hot path数据库的优选方案。在动手实验使用Function App的Cosmos DB Output binding将上一节实验中蜂窝网关获取的遥测数据写入到提前创建的Cosmos DB数据库container，使用Portal Data Explorer查看数据。
-
 ## 📑基础阅读
-
-### ❔面向API编程
-
-### 
 
 ## 🧪实验步骤
 
