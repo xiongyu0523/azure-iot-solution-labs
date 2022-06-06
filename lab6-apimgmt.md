@@ -4,7 +4,9 @@
 
 通过前面的实验已经实现了一个IoT数据采集、预处理、存储以及获取的最小系统。理论上只要继续完善其他数据类型，继续添加更多的HTTP Function，比如获取车辆信息，获取货运行程信息等，便可以实现规划的冷链运输车辆状态与运输环境监测系统。但是，别忘了本实验的终极目标是输出一套完整的API供其他业务系统使用。如何能够统一的设计、规范化、发布和版本化这些API，甚至提供的文档给使用最终API的使用者？答案就是使用专门的API管理服务，也称为API网关。
 
-本节实验学习的目标就是在Azure上的API网关PaaS服务：Azure API Management。你将创建一个服务实例，把之前实验中实现的温湿度数据获取API使用API Management托管并测试。
+本节实验学习的目标就是在Azure上的API网关PaaS服务：Azure API Management。你将创建一个服务实例，把之前实验中实现的温湿度数据获取API使用API Management托管并进行测试。
+
+![](images/lab6.png)
 
 ## 📑基础阅读
 
@@ -73,20 +75,20 @@ API Management的API创建和导入支持多种模式，这里使用最简单的
 
 7. 在**HTTP Request**可以看到发送的请求的URL，比如`GET https://iot-lab-api-<your-name>.azure-api.net/api/<your-device>/telemetry`，请求中包含了一个默认的、拥有当前API Management服务下所有API访问权限的**Subscription Key**，在**Test**功能页面中，Portal已经帮忙添加了这个Header，若是自己使用Postman等工具进行测试则需要手动添加
 
-> 💡API Management中的**Subscription**的概念与Azure层面的**Subscription**不是一回事，它定义了一组供API消费者使用的密钥，服务端通过验证密钥的正确性判断客户端是否已经被授权调用API，**Subscription**可以作用于全局、单个产品或单个API，它是API Management认证客户端权限的默认方式，其他认证方式还包括OAuth 2.0、客户端证书和指定IP地址等方式
+    > 💡API Management中的**Subscription**的概念与Azure层面的**Subscription**不是一回事，它定义了一组供API消费者使用的密钥，服务端通过验证密钥的正确性判断客户端是否已经被授权调用API，**Subscription**可以作用于全局、单个产品或单个API，它是API Management认证客户端权限的默认方式，其他认证方式还包括OAuth 2.0、客户端证书和指定IP地址等方式
 
 8. 在**HTTP Response**/**Message**下可以看到API Management的API网关返回的结果
 
-```
-HTTP/1.1 200 OK
-cache-control: private
-content-encoding: gzip
-content-type: text/plain; charset=utf-8
-date: Sun, 05 Jun 2022 14:52:30 GMT
-ocp-apim-apiid: func_http
-...
-[{"temperature":29.09,"humidity":81.22},{"temperature":29.08,"humidity":81.33}, ...
-```
+    ```
+    HTTP/1.1 200 OK
+    cache-control: private
+    content-encoding: gzip
+    content-type: text/plain; charset=utf-8
+    date: Sun, 05 Jun 2022 14:52:30 GMT
+    ocp-apim-apiid: func_http
+    ...
+    [{"temperature":29.09,"humidity":81.22},{"temperature":29.08,"humidity":81.33}, ...
+    ```
 
 ### 3）增加调用限制Policy
 
@@ -98,16 +100,16 @@ ocp-apim-apiid: func_http
 
 3. 返回后看到在Inbound Processing中增加了一个**rate-limit-by-key**的规则，点击`</>`标记可以看到Policy XML描述文件，其中`<inbound>`段落有三条Policy：
 
-  ```xml
-  <inbound>
-      <base />
-      <set-backend-service id="apim-generated-policy" backend-id="iot-lab-function-neo" />
-      <rate-limit-by-key calls="3" renewal-period="30" counter-key="@(context.Subscription?.Key ?? "anonymous")" />
-  </inbound>
-  ```
+    ```xml
+    <inbound>
+        <base />
+        <set-backend-service id="apim-generated-policy" backend-id="iot-lab-function-<your-name>" />
+        <rate-limit-by-key calls="3" renewal-period="30" counter-key="@(context.Subscription?.Key ?? "anonymous")" />
+    </inbound>
+    ```
 
-  > 💡`<base />`表示自动继承上一级Scope定义的Policy，Scope可以分为全局、产品、API和Operations四级。这里操作的是最底层的、最具体的Opeartion level，如果选择**All Operations**或者选择**All APIs**来设定Policy，则Policy的作用范围可以被下面具体的API或Operation继承。
-
+    > 💡`<base />`表示自动继承上一级Scope定义的Policy，Scope可以分为全局、产品、API和Operations四级。这里操作的是最底层的、最具体的Opeartion level，如果选择**All Operations**或者选择**All APIs**来设定Policy，则Policy的作用范围可以被下面具体的API或Operation继承。
+    
 4. 返回到**Test**选项下，填写deviceid续发送多次请求，第四次请求可以看到API网关返回**429 Too Many Requests**的状态码，说明API Management Policy已经生效
 
 ```

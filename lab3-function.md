@@ -4,6 +4,8 @@
 
 本节实验将学习Azure Function App基础知识，动手在Azure Portal上使用javascript编写一个Function处理蜂窝网关上传到IoT Hub的原始数据，根据CAN协议解析成可读的格式，同时通过获取device id为后面存储到数据库作准备。
 
+![](images/lab3.png)
+
 ## 📑基础阅读
 
 ### ❔Serverless无服务架构

@@ -4,6 +4,8 @@
 
 本节实验继续Azure Function App和Azure Cosmos DB的学习和实践。用户将使用Function App响应HTTP请求从Cosmos DB中返回指定device的最近5条温湿度数据。通过学习本节内容，用户可以掌握到HTTP Trigger, HTTP Output binding和Cosmos DB Input binding的基本用法。
 
+![](images/lab5.png)
+
 ## 🧪实验步骤
 
 ### 1）创建API management实例

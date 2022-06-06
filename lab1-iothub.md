@@ -4,6 +4,8 @@
 
 本节实验将通过IoT Hub DPS服务把蜂窝网关实验箱注册到IoT Hub上，配置device twin使能网关从CAN总线指定地址开始采集温湿度传感器原始数据发送到IoT Hub。使用Azure IoT Explorer工具获取原始数据进行测试验证。
 
+![](images/lab1.png)
+
 ## 📑基础阅读
 
 ### ❔什么是Resource group
@@ -135,8 +137,6 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 2. 打开本地安装好的Azure IoT Explorer工具，点击**Add connection**，将上一步复制的内容贴到对话框中，点击**Save**保存
 
 3. 在打开的设备列表中找到并点击上一步通过IoT Hub DPS服务注册到IoT Hub中的设备，在左侧导航栏点击第三行**Telemetry**，再点击右边**Start**开始从IoT Hub内置的Event Hub中获取新发送上来的数据
-
-4. 等待一会界面上将开始刷收到的原始数据
 
 ## 📚扩展阅读
 
