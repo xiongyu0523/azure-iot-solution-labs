@@ -40,7 +40,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 1. Azure Portal左侧导航栏选择**Create a resource**，在**Internet of Things**分类中选择**IoT Hub**点击**Create**开启创建向导
 
-2. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组。
+2. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
 
 3. **IoT Hub name**输入一个独立无二的的名称，比如`iot-lab-hub-<your-name>`，它会成为IoT hub URL的前缀：`iot-lab-hub-<your-name>.azure-devices.net`
 
@@ -66,7 +66,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 3. 回到IoT Hub DPS服务，左侧导航栏选择**Certificates**，点击**Add**
 
-4. 在打开的窗口中，**Certificate name**填写一个在当前DPS中独一无二的的名称，比如`iot-lab-root`，选择实验指南根本目录下的[root.pem](resources/root.pem)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书。
+4. 在打开的窗口中，**Certificate name**填写一个在当前DPS中独一无二的的名称，比如`iot-lab-root`，选择实验指南根本目录下的[root.pem](resources/root.pem)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书
 
    > 💡勾选**Set certificate status to verified on upload**省略随机数密钥挑战的步骤，但这样做法需要用户确认上传证书的是可信的。
 
@@ -124,11 +124,11 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 4. 关闭电源重启蜂窝网关。
 
-> 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，用户也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
+    > 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，用户也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
 
 ### 5）使用Azure IoT Explorer获取原始数据
 
-在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放，用户可以使用Azure IoT Explorer调试工具观察蜂窝网关发送的原始数据
+在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放，用户可以使用Azure IoT Explorer调试工具观察蜂窝网关发送的原始数据。
 
 1. 打开创建的IoT Hub，左侧导航栏中点开**Security Settings**类别中的**Shared access polices**，在右侧打开的界面中点击**iothubowner** Policy Name，复制第三行**Primary conneciton string**
 

@@ -41,6 +41,7 @@ Function App支持在Portal上直接开发，也提供完整的、基于vscode�
   - package.json        // node.js项目文件
   - local.settings.json // 本地存储connection string和环境变量的文件，避免代码直接嵌入这些信息
 ```
+
 > 💡在Azure环境的Function App使用Applciation Setting来存储环境变量和敏感信息（等同于本地的local.settings.json文件），用户也可以使用Azure Key Vault来管理这些secret。
 
 ### ❔什么是Trigger和Binding
@@ -72,10 +73,10 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 |字段|含义|
 |---|---|
 |**type**|字符串表示该Trigger或者Binding的类型，具体支持哪些类型可以参考这个[表格](https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings?tabs=csharp#supported-bindings)|
-|**name**|字符串表示变量名，将作为参数传入Function。当存在多个Binding时，按照他们声明的顺序传递|
+|**name**|字符串表示变量名，将作为参数传入Function，当存在多个Binding时，按照他们声明的顺序传递|
 |**direction**|Trigger和Input binding是**in**，Output binding是**out**|
 |**connection**|字符串是该Binding连接服务的connection string变量名，它的值存储在applciation settings中|
-|**cardinality**|一个IoT hub/Event hub Trigger特有的字段，`many`表示一次触发可以是包含了多条数据，此时IoTHubMessages参数是一个Array类型，每个元素都是一个JSON字符串。`one`表示一次触发只包喊一条数据，此时IoTHubMessages是一个被parse后的对象|
+|**cardinality**|一个IoT hub/Event hub Trigger特有的字段，`many`表示一次触发可以是包含了多条数据，此时IoTHubMessages参数是一个Array类型，每个元素都是一个JSON字符串，`one`表示一次触发只包喊一条数据，此时IoTHubMessages是一个被parse后的对象|
 |**consumerGroup**|一个IoT hub/Event hub Trigger特有的字段，告诉Binding从哪一个消费组中读取消息，消费组可以在[IoT Hub endpoint](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-read-builtin)页面配置|
 
 
@@ -117,7 +118,7 @@ Function App binding支持IoT hub作为Trigger，用户可以非常方便的使�
 
 5. **Consumer group**保持默认的`$Default`
 
-6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**和**function.json**，默认的代码只是将收到的消息记录到Application Insight日志中。下面是代码的基本结构和注释：
+6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**和**function.json**，默认的代码只是将收到的消息记录到Application Insight日志中，下面是代码的基本结构和注释：
 
     ```javascript
     // Javascript Function使用module.exports声明入口
@@ -139,7 +140,7 @@ Function App binding支持IoT hub作为Trigger，用户可以非常方便的使�
     };
     ```
 
-6. 在左侧**Developer**导航栏中点击**Monitor**，在展开的页面**Invocation**可以看到Function被调用的记录和成功与否的状态。选择**Logs**，可以Applicaiton Insight中的日志，代表Function已经被正常触发和执行。
+6. 在左侧**Developer**导航栏中点击**Monitor**，在展开的页面**Invocation**可以看到Function被调用的记录和成功与否的状态。选择**Logs**，可以Applicaiton Insight中的日志，代表Function已经被正常触发和执行
 
     ```
     2022-05-28T07:18:15.418 [Information] Executing 'Functions.IoTHub_EventHub1' (Reason='(null)', Id=0cc6c415-3237-4a8b-b1b4-e9bcf835c0d6)
