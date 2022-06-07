@@ -150,7 +150,7 @@ module.exports = async function (context, IoTHubMessages) {
 
     > 💡从**id**开始往下的都是系统自动添加的字段，比如_ts是存入Cosmos DB的时间，_etag用作并发控制目的，他们都是由Cosmos DB服务端维护并更新的。
 
-2. 在Data Expolrer中点击**Edit Filter**按钮展开SQL语句WHERE子句部分编辑窗口，尝试的一些下面SQL语句查询一段时间内的遥测数据文档。
+2. 在Data Expolrer中点击**Edit Filter**按钮展开SQL语句WHERE子句部分编辑窗口，尝试的一些下面SQL语句查询一段时间内的遥测数据文档
 
     ```sql
     SELECT * FROM c WHERE c.deviceid = "<your-deviceid>" AND (c.arrived between "<start-time>" AND "<end-time>")
@@ -161,6 +161,9 @@ module.exports = async function (context, IoTHubMessages) {
 ## 📚扩展阅读
 
 - 🔗[Welcome to Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction)
+
 - 🔗[Azure Cosmos DB in IoT workloads](https://docs.microsoft.com/en-us/azure/architecture/solution-ideas/articles/iot-using-cosmos-db)
+
 - 🔗[Azure Cosmos DB trigger and bindings](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-cosmosdb-v2?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript)
+
 - 🔗[Getting started with SQL queries](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/sql-query-getting-started)

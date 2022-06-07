@@ -8,7 +8,7 @@
 
 ## 🧪实验步骤
 
-### 1）创建API management实例
+### 1）创建并测试HTTP Trigger Function
 
 Function App binding支持HTTP Request作为Trigger触发Function执行，并通过Output binding提供HTTP response。这是Serverless架构中非常重要的一个功能，多个Function可以组成起来作为API驱动的无服务后端。这一步从学习一个最简单的HTTP Trigger实例代码开始，了解HTTP Trigger Function的使用和配置。
 
@@ -64,7 +64,7 @@ Function App binding支持HTTP Request作为Trigger触发Function执行，并通
 
 4. 在**Selected HTTP method**处修改为仅支持`GET`方法，点击**Save**保存
 
-5. 完成这一步后访问的URL已经改变，用户可以重复上一步复制URL粘贴到浏览器测试，U模板中的 {device} 可以用任意字符串替代。
+5. 完成这一步后访问的URL已经改变，用户可以重复上一步复制URL粘贴到浏览器测试，U模板中的`{device}`可以用任意字符串替代。
 
 ### 3）增加Cosmos DB Input binding
 
@@ -143,5 +143,7 @@ module.exports = async function (context, req, inputDocument) {
 ## 📚扩展阅读
 
 - 🔗[Azure Functions HTTP triggers and bindings overview](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook?tabs=in-process%2Cfunctionsv2&pivots=programming-language-javascript)
+
 - 🔗[Azure Functions binding expression patterns](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-expressions-patterns)
+
 - 🔗[Securing Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/security-concepts?tabs=v4)

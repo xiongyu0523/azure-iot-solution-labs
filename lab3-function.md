@@ -14,7 +14,7 @@
 
 > 💡无服务设计模式也不是所有场景都有优势，对于需要长时间运行的逻辑代码、依赖于内部状态进行处理的应用，以及冷启动有极短需求的情况，使用传统的长时间运行的计算服务可能更合适。
 
-> 💡PaaS + FaaS的设计模式很适合专注于实现业务增值的IoT开发者。他们的技术背景可能偏硬件和嵌入式系统设计，而非IT或者云计算领域，使用这样的搭配可以快速实现满足业务需求，又能满足规模化部署的
+> 💡PaaS + FaaS的设计模式很适合专注于实现业务增值的IoT开发者。他们的技术背景可能偏硬件和嵌入式系统设计，而非IT或者云计算领域，使用这样的搭配可以快速实现满足功能需求，又能满足规模化部署的性能要求。
 
 ### ❔什么是Function App
 
@@ -168,7 +168,7 @@ Function App binding支持IoT hub作为Trigger，用户可以非常方便的使�
 }
 ```
 
-在本实验中，c1的值为温湿度传感器原始数据，这个字符串的各个字符的含义如下
+在本实验中，c1的值为温湿度传感器原始数据，这个字符串的各个字符的含义如下：
 
 |字符索引|0-1|2-3|4-5|6-9|10-13|14-15| 
 |---|---|---|---|---|---|---|
@@ -206,7 +206,6 @@ module.exports = async function (context, IoTHubMessages) {
 2022-05-28T06:53:13.084 [Information] Executed 'Functions.IoTHub_EventHub1' (Succeeded, Id=d35c9e79-3d69-4c5e-a755-62c0a651a053, Duration=3ms)
 ```
 
-
 ### 4）从Function获取metadata
 
 从Function参数传入的**IoTHubMessages**只包含了Telemetry消息的内容，不包括properties，enqueuedtime等metadata数据。Azure Function javascript规范规定了这些信息通过**context.bindingData**传递，具体不同服务的binding的数据不同。
@@ -234,6 +233,9 @@ module.exports = async function (context, IoTHubMessages) {
 ## 📚扩展阅读
 
 - 🔗[Azure Function Overview](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview)
+
 - 🔗[Azure Functions triggers and bindings concepts](https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings?tabs=csharp)
+
 - 🔗[Azure IoT Hub trigger for Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-event-iot-trigger?tabs=in-process%2Cfunctionsv2%2Cextensionv5&pivots=programming-language-javascript)
+
 - 🔗[Azure Functions JavaScript developer guide](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-node?tabs=v2-v3-v4-export%2Cv2-v3-v4-done%2Cv2%2Cv2-log-custom-telemetry%2Cv2-accessing-request-and-response%2Cwindows-setting-the-node-version)

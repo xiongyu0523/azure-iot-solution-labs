@@ -19,7 +19,9 @@ Contoso是一家提供冷链货运物流服务企业，正在研发一套冷链�
 ### Azure服务选型
 
 结合自身项目需求和微软[Azure IoT Well-Architected Framework](https://docs.microsoft.com/en-us/azure/architecture/framework/iot/iot-overview)指导，应该从以下五大维度考量相关Azure服务的选型：
+
 - [可靠性](https://docs.microsoft.com/en-us/azure/architecture/framework/iot/iot-reliability)：选择拥有[99.9%+ SLA](https://azure.microsoft.com/en-us/support/legal/sla/summary/)保障的Azure PaaS服务构建方案
+
 - [安全性](https://docs.microsoft.com/en-us/azure/architecture/framework/iot/iot-security)：采用[Azure IoT Hub](https://docs.microsoft.com/en-us/azure/iot-hub/iot-concepts-and-iot-hub)云网关和设备证书接入方式来保证身份和数据传输安全
 - [卓越运维](https://docs.microsoft.com/en-us/azure/architecture/framework/iot/iot-operational-excellence)：采用[Azure Function](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview)事件驱动设计模式避免维护虚机等基础设施
 - [性能效率](https://docs.microsoft.com/en-us/azure/architecture/framework/iot/iot-performance)：选择[Azure Cosmos](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) NoSQL数据库支持ms级的时序数据写入和读取
@@ -30,10 +32,15 @@ Contoso是一家提供冷链货运物流服务企业，正在研发一套冷链�
 根据项目需求和服务选型定下的大致方案，设计PoC架构如下：
 
 1. 设备采用南京理学T-BOX蜂窝网关，通过CAN总线连接I/O模块和温湿度模块数据
+
 2. 设备通过DPS服务注册并连接到IoT hub，使用devcie twin管理设备配置
+
 3. 设备发送的原始数据进入IoT hub后触发Azure Function进行解析后写入Cosmos DB
+
 4. 设备发送的原始数据通过Message route的方式保存一份到Blob storage方便今后故障分析和调试
+
 5. 通过API Management服务提供API给内部集成开发者，API采用Azure Function作为后端，实现Cosmos DB中数据的获取、IoT hub设备的控制，metadata的读取等能力
+
 6. 实现PoC的同时也会用到Azure Monitor、Application Insight、Key Vault等支撑服务，实现服务之间的远程调试监控、安全与认证等功能
 
 ![](images/architecture.png)

@@ -32,7 +32,7 @@ API Management服务由**API网关**、**管理平面**, 和**开发者门户**�
 
 ### ❔API Management Policy
 
-Policy是API Management中的一个重要功能单元，它允许API的开发人员声明一些系列的动作，在HTTP request到达或HTTP response离开API网关的时候顺序的执行这些Policy定义的动作，支持的功能包括访问条件限制、身份验证、缓存、内容转换等等。Policy是一个XML配置文件，包含`inbound`、`backend`、`outbound`和`on-error`几个段落，分别代表不同阶段要执行的动作，用户可以通过编辑XML或者在Portal上表单进行Policy的定义和修改。Policy还支持使用C#表达式做一些复杂的处理和判断。关于Policy更详细的内容可以参照[这里](https://docs.microsoft.com/en-us/azure/api-management/api-management-policies)
+Policy是API Management中的一个重要功能单元，它允许API的开发人员声明一些系列的动作，在HTTP request到达或HTTP response离开API网关的时候顺序的执行这些Policy定义的动作，支持的功能包括访问条件限制、身份验证、缓存、内容转换等等。Policy是一个XML配置文件，包含`inbound`、`backend`、`outbound`和`on-error`几个段落，分别代表不同阶段要执行的动作，用户可以通过编辑XML或者在Portal上表单进行Policy的定义和修改。Policy还支持使用C#表达式做一些复杂的处理和判断。关于Policy更详细的内容可以参照[这里](https://docs.microsoft.com/en-us/azure/api-management/api-management-policies)。
 
 ### ❔Contoso冷链运输车辆管理API
 
@@ -59,7 +59,7 @@ Policy是API Management中的一个重要功能单元，它允许API的开发人
 
 ### 2）从Function App导入并测试API
 
-API Management的API创建和导入支持多种模式，这里使用最简单的从已有的Function App中导入上一步
+API Management的API创建和导入支持多种模式，这里使用最简单的从已有的Function App中导入上一步。
 
 1. 进入API Management服务，左侧导航栏选择**APIs**，在分类**Create from Azure resource**中选择**Function App**
 
@@ -124,6 +124,9 @@ HTTP/1.1 429 Too Many Requests
 ## 📚扩展阅读
 
 - 🔗[API First world](https://api-first-world.com/)
+
 - 🔗[About API Management](https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts)
+
 - 🔗[Azure API Design eBook](https://azure.microsoft.com/mediahandler/files/resourcefiles/api-design/Azure_API-Design_Guide_eBook.pdf)
+
 - 🔗[OpenAPI Specification v3.1.0](https://spec.openapis.org/oas/v3.1.0#version-3-1-0)

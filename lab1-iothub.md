@@ -116,7 +116,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 ### 4）配置蜂窝网关连接IoT Hub
 
-这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，使设备能连接到上一步创建的IoT hub DPS服务
+这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，使设备能连接到上一步创建的IoT hub DPS服务。
 
 1. 启动实验箱电源，连接PC到`AzLektec-XXX`的WiFi热点，密码为`azurelektec`
 
@@ -124,7 +124,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 3. 在**Azure IoT DPS配置**中，填入**ID Scope**后点击**设置**，ID Scope可以在DPS服务的页面右侧找到，比如`0ne0061ABC8`
 
-4. 关闭电源重启蜂窝网关。
+4. 关闭电源重启蜂窝网关
 
     > 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，用户也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
 
