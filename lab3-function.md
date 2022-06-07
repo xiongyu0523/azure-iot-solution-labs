@@ -108,7 +108,7 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 
 ### 2）创建并执行IoT hub Trigger Function
 
-Function App binding支持IoT hub作为Trigger，用户可以非常方便的使用Azure Function作为IoT hub下游的数据处理引擎。在这一步中我们将使用IoT hub trigger 实现触发Function调用并将从内置Event hub endpoint中读取原始数据作处理和展示。
+Function App binding支持IoT hub作为Trigger，用户可以非常方便的使用Azure Function作为IoT hub下游的数据处理引擎。在这一步中将使用IoT hub trigger 实现触发Function调用并将从内置Event hub endpoint中读取原始数据作处理和展示。
 
 1. 进入Function App服务，左侧导航栏选择**Functions**，点击**Create**
 

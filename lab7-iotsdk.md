@@ -2,7 +2,7 @@
 
 ## 🎯实验目的
 
-本节实验你将实现一个REST API控制蜂窝网关CAN总线上接入的I/O模块控制继电器和LED动作模拟远程锁车开锁的场景。通过本实验你可以学习IoT Hub控制设备的几种方法和IoT SDK的更新device twin的相关代码，同时了解如何在Azure Function中添加依赖模块调用（任意）SDK进行特定目的的开发。
+本节实验你将实现一个REST API，控制蜂窝网关CAN总线上接入的I/O模块控制继电器和LED动作模拟远程锁车开锁的场景。通过本实验你可以学习IoT Hub控制设备的几种方法和IoT SDK的更新device twin的相关代码，同时了解如何在Azure Function中添加依赖模块调用（任意）SDK进行特定目的的开发。
 
 蜂窝网关默认使用IoT Hub device twin的desired property同步设备I/O动作，并定义了twin协议格式：
 
@@ -41,7 +41,7 @@ IoT Hub支持三种不同的方式实现云到设备的控制执行，分别是*
 
 2. 上面选择**Debug console**->**CMD**，进入文件系统
 
-3. 鼠标点击目录**site**->**wwwroot**进入Function文件根目录
+3. 点击目录**site**->**wwwroot**进入Function文件根目录
 
 4. 在CMD中输入`npm init`开始npm包项目创建向导。首先输入任意项目名称，其他内容按回车键略过，完成后可以看到文件目录中多出了npm包工程的package.json文件
 

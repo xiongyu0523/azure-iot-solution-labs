@@ -90,7 +90,7 @@ SELECT TOP 5 c.temperature, c.humidity FROM c WHERE c.deviceid = {device} ORDER 
 
 > 💡此SQL语句从指定的container中的指定device筛选出最近的五条温湿度数据，其中{device}取值上一步中的HTTP Trigger route路径，比如`GET /api/device001/telemetry`，{device}被替换为`"device001"`。
 
-8. 下面是向导自动创建的Function.json，它各字段的含义与上一实验中介绍的Cosmos DB Output binding是一样的，**sqlQuery**中保存了我们要运行SQL语句的模板。
+8. 下面是向导自动创建的Function.json，它各字段的含义与上一实验中介绍的Cosmos DB Output binding是一样的，**sqlQuery**中保存了要运行SQL语句的模板。
 
     ```json
     {

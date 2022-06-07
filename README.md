@@ -21,10 +21,10 @@
 ## 📖准备事项
 
 - ✅笔记本电脑，安装最新版本[Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases)工具
-- ✅提前准备好[Azure.com](azure.com)的账号和订阅（针对现场的同学我们会发放临时测试订阅）
+- ✅提前准备好[Azure.com](azure.com)的账号和订阅
 - ✅一点点JavaScript/Node.js了解
   
-> ⚠虽然实验用到的服务中大部分有免费额度，但不是全部，因此无法使用免费订阅。
+> 💡虽然实验用到的服务中大部分有免费额度，但不是全部，因此无法使用免费订阅。
 
 ## 🧪实验指南
 
@@ -35,7 +35,7 @@
 - [实验3：编写Function实现数据解析](lab3-function.md)
 - [实验4：存储时序数据到Cosmos DB](lab4-cosmosdb-in.md)
 - [实验5：使用HTTP查询Cosmos DB](lab5-cosmosdb-out.md)
-- [(可选) 实验6：使用API Management托管API](lab6-apimgmt.md)
+- [实验6：使用API Management托管API](lab6-apimgmt.md)
 - [实验7：增加IoT SDK实现远程控制](lab7-iotsdk.md)
 
 ## 🌐关于微软IoT
