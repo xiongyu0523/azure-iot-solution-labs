@@ -2,7 +2,7 @@
 
 ## 🎯实验目的
 
-本节实验将学习Azure Function App基础知识，动手在Azure Portal上使用javascript编写一个Function处理蜂窝网关上传到IoT Hub的原始数据，根据CAN协议解析成可读的格式，同时通过获取device id为后面存储到数据库作准备。
+本节实验你将学习到Azure Function App基础知识。自己动手在Azure Portal上使用javascript语言编写一个Function，处理蜂窝网关并上传到IoT Hub的原始数据，再根据CAN协议解析成可读的格式。同时获取device id为后面存储到数据库作准备。
 
 ![](images/lab3.png)
 
@@ -22,13 +22,13 @@ Azure Function App是在上Azure上实现无服务架构的核心服务，它与
 
 Function App Runtime支持在Windows或者Linux操作系统，用户可以使用C#、Java、JavaScript、Python和PowerShell编写自己的代码，甚至通过custom handler使用其他不被原生支持的语言，比如Go和Rust。
 
-Function App支持在Portal上直接开发，也提供完整的、基于vscode的扩展工具让用户在本地进行代码的开发和测试，借助这些工具，编写和调试Function跟传统的软件开发体验几乎没有区别。用户只要点击一个PUBLISH按钮，就可以同步&部署到Azure云端。
+Function App支持在Portal上直接开发，也提供完整的、基于vscode的扩展工具让用户在本地进行代码的开发和测试，借助这些工具，编写和调试Function跟传统的软件开发体验几乎没有区别。用户只要点击一个按钮，就可以同步&部署本地代码到Azure云端。
 
-> 💡本实验为了不同软件和网络安装软件引入的问题，选择直接在Portal上进行开发。但是在实际的应用中，绝大部分用户都将使用的工具和扩展在本地进行开发。
+> 💡本实验为了减少因不同软件环境和网络访问引入的问题，选择直接在Portal上进行开发。但是在实际的应用中，绝大部分用户都将使用工具和扩展在本地进行开发。
 
 ### ❔Function App的文件结构
 
-不同语言的Function的组成结构略有不同，本实验j将使用javascript/node.js进行开发，这里的示例仅针对javascript/node.js的情况。
+不同语言的Function的组成结构略有不同，本实验将使用javascript/node.js进行开发，这里的示例仅针对javascript/node.js的情况：
 
 ```
 - yourfuncitionapp    
@@ -44,7 +44,7 @@ Function App支持在Portal上直接开发，也提供完整的、基于vscode�
   - local.settings.json // 本地存储connection string和环境变量的文件，避免代码直接嵌入这些信息
 ```
 
-> 💡在Azure环境的Function App使用Applciation Setting来存储环境变量和敏感信息（等同于本地的local.settings.json文件），用户也可以使用Azure Key Vault来管理这些secret。
+> 💡在Azure环境的Function App使用**Applciation Setting**来存储环境变量和敏感信息（等同于本地的local.settings.json文件），用户也可以使用Azure Key Vault来管理这些secret。
 
 ### ❔什么是Trigger和Binding
 
@@ -108,19 +108,19 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 
 ### 2）创建并执行IoT hub Trigger Function
 
-Function App binding支持IoT hub作为Trigger，用户可以非常方便的使用Azure Function作为IoT hub下游的数据处理引擎。在这一步中将使用IoT hub trigger 实现触发Function调用并将从内置Event hub endpoint中读取原始数据作处理和展示。
+Function App binding支持IoT hub作为Trigger，用户可以非常方便的使用Azure Function作为IoT hub下游的数据处理引擎。在这一步中你将使用IoT hub trigger 实现触发Function调用并从内置Event hub endpoint中读取原始数据作处理和展示。
 
 1. 进入Function App服务，左侧导航栏选择**Functions**，点击**Create**
 
 2. 在打开的窗口中，选择`Develop in Portal`，**Template**选择`IoT Hub(Event Hub)`
 
-3. **New Function**输入一个该Function App中独立无二的的名称，比如`func_iothub`
+3. **New Function**输入一个function名称，比如`func_iothub`
 
 4. **事件中心连接**处点击**New**，点击**IoT Hub**分类选择上一个实验创建的IoT Hub实例，下面选择`Events(built-in endpoint)`，点击**OK**
 
 5. **Consumer group**保持默认的`$Default`
 
-6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**和**function.json**，默认的代码只是将收到的消息记录到Application Insight日志中，下面是代码的基本结构和注释：
+6. Function创建完成后在左侧**Developer**导航栏中点击**Code + Test**后可以看到Function的源码文件**index.js**和**function.json**，默认的代码只是把收到的消息记录到Application Insight日志中，下面是代码的基本结构和注释：
 
     ```javascript
     // Javascript Function使用module.exports声明入口
@@ -153,7 +153,7 @@ Function App binding支持IoT hub作为Trigger，用户可以非常方便的使�
 
 ### 3）提取和解析温湿度数据
 
-蜂窝网关会产生包含**cycDev**和**cycCAN**两种类型的消息，这里关心的是**cycCan**的消息，他的**payload**中会按照device twin配置的CAN ID采集并返回原始数据，下面是消息的范例格式。
+蜂窝网关会产生包含**cycDev**和**cycCAN**两种类型的消息，这里关心的是**cycCan**的消息，它的**payload**中会按照device twin配置的CAN ID采集并返回原始数据，下面是消息的范例格式。
 
 ```json
 {

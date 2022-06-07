@@ -2,29 +2,38 @@
 
 ## 🎯实验目的
 
-本节实验将通过IoT Hub DPS服务把蜂窝网关实验箱注册到IoT Hub上，配置device twin使能网关从CAN总线指定地址开始采集温湿度传感器原始数据发送到IoT Hub。使用Azure IoT Explorer工具获取原始数据进行测试验证。
+本节实验你将通过IoT Hub DPS服务把蜂窝网关实验箱注册到IoT Hub上，并配置device twin使网关从CAN总线指定地址开始采集温湿度传感器原始数据发送到IoT Hub。使用Azure IoT Explorer工具获取原始数据进行测试验证。
 
 ![](images/lab1.png)
 
 ## 📑基础阅读
 
-### ❔什么是Resource group
+### ❔IoT Hub和IoT Hub DPS的关系
 
-Resource group是位于订阅下面的资源容器，用户可以按照不同的组织、项目或资源的生命周期来决定如何组织和管理Resource group下的资源。本节实验将专门创建一个Resource group，既可以帮助分析MVP的总成本，也可以方便在实验结束后一次性清除所有相关的资源。
+**IoT Hub**是在Azure上所有IoT解决方案都必须要用的核心服务。IoT Hub是一个云网关，它支持多种协议设备接入、设备管理以及IoT数据和控制指令的双向收发。IoT Hub不仅仅是一个MQTT broker，内置了一个Event Hub消息队列可以缓存最多7天的数据，支持Device Twin存储设备的metadata和长期状态。IoT Hub具备多种连接其他Azure服务的接口，用户可以结合Azure上其他存储、分析、机器学习等服务实现一个完整的IoT解决方案。
 
-### ❔什么是IoT Hub和IoT Hub DPS
+**IoT Hub DPS**是IoT Hub的一个配套服务，负责帮助简化在设备和服务端的Provisioning工作。通过DPS支持包括X509证书和TPM2.0在内的高安全的认证设备身份，能根据灵活的规则动态分配设备到不同的IoT Hub，无需用户干预的自动注册设备。
 
-IoT Hub是在Azure上所有IoT解决方案都必须要用的核心服务。IoT Hub是一个云网关，它支持多种协议设备接入、设备管理以及IoT数据和控制指令的双向收发。IoT Hub具备多种连接其他Azure服务的能力，可以结合其他存储、分析、机器学习等服务实现一个完整的IoT解决方案。
+### ❔什么是Device Twin
 
-IoT Hub DPS是IoT Hub的一个配套服务，负责帮助简化在设备和服务端的provisioning工作，通过DPS支持高安全的认证设备身份，能根据灵活的规则分配设备到不同的IoT Hub，无需干预的自动注册设备。
+Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影子。它是一个JSON文档存放在IoT Hub中，保存着每个设备的metadata信息，设备端和云端分别可以读写它的某一部分内容：
 
-### ❔什么是Azure IoT Explorer
+- 云端更新"Desired"字段，设备可以异步的获得通知读取这些信息决定自己本地的处理逻辑。
+- 设备端可以将自己的状态信息通过"Reported"字段上报到Twin中，云端也读取获得设备的状态信息。
 
-Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT Service SDK和Event hub SDK访问IoT Hub与提供UI交互界面。用户可以使用IoT Explorer可以完成设备管理，设备数据接收，发送控制指令以及Azure IoT PnP相关的操作。
+💡用户可以把Device Twin当做设备的云上配置文件使用，有需要掉电保存的状态可以写入到Twin中，每次上电再从IoT Hub上读取状态。
+
+💡很多IoT Hub相关的功能，包括IoT Edge，OTA，Defender等都用到了Device Twin。
+
+### ❔Azure IoT Explorer工具介绍
+
+Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT Service SDK和Event hub SDK访问IoT Hub与提供UI交互界面。用户可以使用IoT Explorer可以完成设备管理，设备数据接收，发送控制指令以及Azure IoT PnP相关的调试操作。
 
 ## 🧪实验步骤
 
 ### 1）创建Resource group
+
+本节实验你将单独创建一个Resource group，所有后面创建的资源都部署在该Resource group下。这样的做法既可以方便统计方案的总成本，也可以在不需要的时候一次性清除所有的实验资源。
 
 1. 登录[**Azure Portal**](portal.azure.com)
 
@@ -36,7 +45,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 5. 点击**Review + Create**->**Create**创建Resource group
 
-> 💡这里选择Region并非说所有在该在Resource group下的服务都将部署到该Region，只是用于存储它所包含服务的metadata
+> 💡这里选择Region并非说所有在该在Resource group下的服务都将部署到该Region，只是用于存储它所包含服务的metadata。
 
 ### 2）创建IoT Hub与IoT Hub DPS
 
@@ -44,7 +53,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 2. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
 
-3. **IoT Hub name**输入一个独立无二的的名称，比如`iot-lab-hub-<your-name>`，它会成为IoT hub URL的前缀：`iot-lab-hub-<your-name>.azure-devices.net`
+3. **IoT Hub name**输入一个独一无二的的名称，比如`iot-lab-hub-<your-name>`，它会成为IoT hub URL的前缀：`iot-lab-hub-<your-name>.azure-devices.net`
 
 4. **Region**选择`East Asia`
 
@@ -54,7 +63,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 7. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
 
-8. **Name**输入一个独立无二的的名称，比如`iot-lab-dps-<your-name>`，它会成为IoT hub DPS URL的前缀：`iot-lab-dps-<your-name>.azure-devices-provisioning.net`
+8. **Name**输入一个独一无二的名称，比如`iot-lab-dps-<your-name>`，它会成为IoT hub DPS URL的前缀：`iot-lab-dps-<your-name>.azure-devices-provisioning.net`
 
 9. **Region**选择`East Asia`
 
@@ -62,19 +71,19 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 ### 3）配置IoT Hub DPS服务
 
-1. 进入IoT Hub DPS服务，左侧导航栏选择**Linked IoT hubs**，点击**Add**
+1. 进入刚刚创建的IoT Hub DPS服务，左侧导航栏选择**Linked IoT hubs**，点击**Add**
 
 2. 在打开的窗口中，选择订阅和上一步创建的IoT Hub，点击**Save**
 
 3. 回到IoT Hub DPS服务，左侧导航栏选择**Certificates**，点击**Add**
 
-4. 在打开的窗口中，**Certificate name**填写一个在当前DPS中独一无二的的名称，比如`iot-lab-root`，选择实验指南根本目录下的[root.pem](resources/root.pem)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书
+4. 在打开的窗口中，**Certificate name**填写一个名称，比如`iot-lab-root`，选择实验指南根本目录下的[root.pem](resources/root.pem)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书
 
-   > 💡勾选**Set certificate status to verified on upload**省略随机数密钥挑战的步骤，但这样做法需要用户确认上传证书的是可信的。
+   > 💡勾选**Set certificate status to verified on upload**省略随机数密钥挑战的步骤，但这样做法需要你确认上传证书的是绝对可信的。
 
 5. 回到IoT Hub DPS服务，左侧导航栏选择**Manage enrollments**，点击**Add enrollment group**
 
-6. **Group name**输入一个在当前DPS中独一无二的的名称，比如`iot-lab-enroll-group`
+6. **Group name**输入一个名称，比如`iot-lab-enroll-group`
 
 7. **Attestation Type**选择`Certificate`
 
@@ -86,7 +95,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 11. **Select how you want to assign devices to hubs**选择`Static Conifguration`
 
-12. **Select the IoT hubs this group can be assigned to**选择上一步的IoT hub
+12. **Select the IoT hubs this group can be assigned to**选择上一步的创建的IoT hub
 
 13. **Initial Device Twin State**中填写以下JSON，以确保蜂窝网关注册到IoT Hub后能够默认开始从CAN总线上采集温湿度数据，以60秒的间隔发送到IoT Hub
 
@@ -126,17 +135,17 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 4. 关闭电源重启蜂窝网关
 
-    > 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，用户也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
+    > 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，你也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
 
 ### 5）使用Azure IoT Explorer获取原始数据
 
-在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放，用户可以使用Azure IoT Explorer调试工具观察蜂窝网关发送的原始数据。
+在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放。这里使用Azure IoT Explorer调试工具观察蜂窝网关发送的原始数据。
 
 1. 打开创建的IoT Hub，左侧导航栏中点开**Security Settings**类别中的**Shared access polices**，在右侧打开的界面中点击**iothubowner** Policy Name，复制第三行**Primary conneciton string**
 
 2. 打开本地安装好的Azure IoT Explorer工具，点击**Add connection**，将上一步复制的内容贴到对话框中，点击**Save**保存
 
-3. 在打开的设备列表中找到并点击上一步通过IoT Hub DPS服务注册到IoT Hub中的设备，在左侧导航栏点击第三行**Telemetry**，再点击右边**Start**开始从IoT Hub内置的Event Hub中获取新发送上来的数据
+3. 在打开的设备列表中找到IoT Hub中的设备，在左侧导航栏点击第三行**Telemetry**，再点击右边**Start**开始从IoT Hub内置的Event Hub中获取新发送上来的数据
 
 ## 📚扩展阅读
 

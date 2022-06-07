@@ -47,15 +47,15 @@ Policy是API Management中的一个重要功能单元，它允许API的开发人
 
 3. **Region**选择`East Asia`
 
-4. **Resource name**输入一个独立无二的的名称，比如`iot-lab-api-<your-name>`，它会成为API Management URL的前缀：`iot-lab-api-<your-name>.azure-api.net`
+4. **Resource name**输入一个独一无二的名称，比如`iot-lab-api-<your-name>`，它会成为API Management URL的前缀：`iot-lab-api-<your-name>.azure-api.net`
 
 5. **Organization name**输入任意名称
 
 6. **Administrator email**输入一个有效的邮箱
 
-4. **Pricing Tier**选择`Developer(No SLA)`
+7. **Pricing Tier**选择`Developer(No SLA)`
 
-5. 点击**Review + Create**->**Create**创建API Management服务
+8. 点击**Review + Create**->**Create**创建API Management服务
 
 ### 2）从Function App导入并测试API
 

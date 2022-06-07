@@ -2,7 +2,7 @@
 
 ## Azure T-BOX功能介绍
 
-
+![](images/tbox.png)
 
 LEKTEC Azure T-BOX是一款通用目的蜂窝网关T-BOX，内置eSIM支持4G LTE CAT-1全网通，支持GNSS定位和灵活可定制的CAN总线网络采集策略。用户可以根据自己对CAN网络的采集需求进行配置，实现对不同ID、不同数据类型CAN节点采集的应用。
 
