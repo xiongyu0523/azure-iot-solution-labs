@@ -30,6 +30,7 @@
 
 - [实验场景、需求与架构分析](architecture.md)
 - [实验硬件平台介绍](hardware.md)
+- [实验0：准备Azure资源组和公共服务](lab0-prepare.md)
 - [实验1：配置网关发送数据到IoT Hub](lab1-iothub.md)
 - [(可选) 实验2：备份原始数据到Blob Storage](lab2-blobstorage.md)
 - [实验3：编写Function实现数据解析](lab3-function.md)

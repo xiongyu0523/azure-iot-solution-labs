@@ -1,13 +1,15 @@
-# Azure实验环境和配套服务准备
+# 实验0：准备Azure资源组和公共服务
 
-在做实验之前先创建好一些公共服务和资源，他们包括：
+## 🎯实验目的
+
+在进行其他实验之前，我们先创建好资源组和一些公共服务，包括：
 
 - [Resource group](###-1）创建Resource-group)（容纳所有其他实验资源）
 - [Storage Account](###-2）创建Storage-Account)（保存各个服务日志&文件）
 - [Application Insights](###-4）创建Application-Insights)（为Function提供应用日志服务）
 - [Log Analytics workspaces](###-3）创建Log-Analytics-workspaces)（存储Application Insights的日志）
 
-## 🧪操作步骤
+## 🧪实验步骤
 
 ### 1）创建Resource group
 
