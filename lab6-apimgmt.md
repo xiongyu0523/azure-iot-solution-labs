@@ -43,7 +43,7 @@ Policy是API Management中的一个重要功能单元，它允许API的开发人
 
 1. Azure Portal左侧导航栏选择**Create a resource**，在**Integration**分类中选择**API Management**点击**Create**开启创建向导
 
-2. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
+2. **Subscription**和**Resource group**分别选择实验订阅和资源组
 
 3. **Region**选择`East Asia`
 

@@ -10,7 +10,7 @@
 
 ### ❔NoSQL数据库
 
-NoSQL的解释为**Not Only SQL data**，泛指不同与传统的关系型的数据库的，以其他非表格形式存储数据的数据库，主要类型包括文档、KV键值、列和图形数据库四大类，它们提供了更加贴近应用特点的方式存储和访问数据，通常可以比SQL数据库更加灵活，也更容易横向扩展。NoSQL数据库对于数据的格式和他们之间的关系相比SQL数据库要宽松得多，使用JSON/BSON等半结构化的形式记录，更有利于数据模型伴随应用的需求作出改变，而SQL数据库在设计之处就要考虑到所有数据之间的关联，它可以更好的保证数据的完整性但是要重构数据模型相对困难。在现代Web应用中，NoSQL已经非常流行。同时，NoSQL数据库也非常适合IoT的场景。
+NoSQL的解释为**Not Only SQL database**，泛指不同与传统的关系型的数据库的，以其他非表格形式存储数据的数据库，主要类型包括文档、KV键值、列和图形数据库四大类，它们提供了更加贴近应用特点的方式存储和访问数据，通常可以比SQL数据库更加灵活，也更容易横向扩展。NoSQL数据库对于数据的格式和他们之间的关系相比SQL数据库要宽松得多，使用JSON/BSON等半结构化的形式记录，更有利于数据模型伴随应用的需求作出改变，而SQL数据库在设计之处就要考虑到所有数据之间的关联，它可以更好的保证数据的完整性但是要重构数据模型相对困难。在现代Web应用中，NoSQL已经非常流行。同时，NoSQL数据库也非常适合IoT的场景。
 
 ### ❔IoT应用数据的特点
 
@@ -65,7 +65,7 @@ SQL API，顾名思义，可以使用SQL作为查询语言，不需要掌握任�
 
 ### ❔关于Partition Key
 
-一个Container中的item可以有完全不同的数据表示，只需要有一个字段需要关心就是（谁是）**Partition Key**。它决定了一个Container中逻辑分区的数量（Cosmos DB自己管理物理分区，完全不需要用户关心），同时也会影响到查询性能和负载均衡，一般的原则是选择取值可能范围大的字段作为Partition Key。
+一个Container中的item可以有完全不同的数据表示，只有一个字段需要关心就是选择（谁是）**Partition Key**。它决定了一个Container中逻辑分区的数量（Cosmos DB自己管理物理分区，完全不需要用户关心），最终会影响到查询性能和负载均衡。一般的原则是选择取值范围大又均匀分布的字段作为Partition Key。
 
 在IoT的场景中，`device Id`通常是一个非常好的选择。由于Cosmos DB把Partition Key相同的item存放在同一个逻辑分区中的，当使用device id作为Partition Key的时候，相同设备的数据都是存放在一起的，而在往往后面实际业务查询的时候很多情况会把将device id作为WHERE语句的过滤条件，这样大大提高了查询的效率。
 
@@ -79,7 +79,7 @@ SQL API，顾名思义，可以使用SQL作为查询语言，不需要掌握任�
 
 2. 选择`Core (SQL) - Recommended`，点击**Create**
 
-2. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
+2. **Subscription**和**Resource group**分别选择实验订阅和资源组
 
 4. **Account name**输入一个独一无二的名称，比如`iot-lab-cosmosdb-<your-name>`，它会成为Cosmos DB Account URL的前缀：`iot-lab-cosmosdb-<your-name>.documents.azure.com`
 

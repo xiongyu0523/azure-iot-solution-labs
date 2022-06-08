@@ -31,7 +31,7 @@ IoT Hub支持三种不同的方式实现云到设备的控制执行，分别是*
 
 1. 在Portal上创建一个默认的HTTP Trigger Function，详细操作可以参照实验5中的[步骤](./lab5-cosmosdb-out.md###-1）创建并测试HTTP-Trigger-Function)
 
-2. 修改Trigger binding的**Route template**为`{device}/control/{lockn}`，方法保留`PUT`，详细操作可以参照实验5中的[步骤](./lab5-cosmosdb-out.md###-2）修改route路径和支持的HTTP方法)
+2. 修改Trigger binding的**Route template**为`{device}/control/{lockn}/{onoff}`，方法保留`PUT`，详细操作可以参照实验5中的[步骤](./lab5-cosmosdb-out.md###-2）修改route路径和支持的HTTP方法)
 
 ### 2）安装IoT SDK依赖库
 

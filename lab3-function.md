@@ -88,7 +88,7 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 
 1. Azure Portal左侧导航栏选择**Create a resource**，在**Computer**分类中选择**Function App**点击**Create**开启创建向导
 
-2. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
+2. **Subscription**和**Resource group**分别选择实验订阅和资源组
 
 3. **Function App name**输入一个独立无二的的名称，比如`iot-lab-function-app-<your-name>`，它会成为Function App URL的前缀：`iot-lab-function-app-<your-name>.azurewebsites.net`
 
@@ -104,7 +104,11 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 
 8. **Plan Type**选择`Consumption(Serverless)`
 
-5. 点击**Review + Create**->**Create**创建Function App服务
+9. 点击**Next: Hosting**，Storage account选择之前创建的`iot-lab-storage-<your-name>`
+
+10. 连续点击**Next**，来到**Monitoring**选项卡下，**Enable Application Insights**选择`Yes`，**Application Insights**选择之前创建的`iot-lab-app-insights`
+
+11. 点击**Review + Create**->**Create**创建Function App服务
 
 ### 2）创建并执行IoT hub Trigger Function
 

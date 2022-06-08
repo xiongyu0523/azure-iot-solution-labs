@@ -25,33 +25,13 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 
 💡很多IoT Hub相关的功能，包括IoT Edge，OTA，Defender等都用到了Device Twin。
 
-### ❔Azure IoT Explorer工具介绍
-
-Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT Service SDK和Event hub SDK访问IoT Hub与提供UI交互界面。用户可以使用IoT Explorer可以完成设备管理，设备数据接收，发送控制指令以及Azure IoT PnP相关的调试操作。
-
 ## 🧪实验步骤
 
-### 1）创建Resource group
-
-本节实验你将单独创建一个Resource group，所有后面创建的资源都部署在该Resource group下。这样的做法既可以方便统计方案的总成本，也可以在不需要的时候一次性清除所有的实验资源。
-
-1. 登录[**Azure Portal**](portal.azure.com)
-
-2. 左侧导航栏选择**Resource group**，点击**Create**
-
-3. **Subscription**选择实验用的订阅，**resource group**输入一个该订阅下独一无二的名称，比如`iot-lab-rg-<your-name>`
-
-4. **Region**选择最近的香港数据中心`East Asia`
-
-5. 点击**Review + Create**->**Create**创建Resource group
-
-> 💡这里选择Region并非说所有在该在Resource group下的服务都将部署到该Region，只是用于存储它所包含服务的metadata。
-
-### 2）创建IoT Hub与IoT Hub DPS
+### 1）创建IoT Hub与IoT Hub DPS
 
 1. Azure Portal左侧导航栏选择**Create a resource**，在**Internet of Things**分类中选择**IoT Hub**点击**Create**开启创建向导
 
-2. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
+2. **Subscription**和**Resource group**分别选择实验订阅和资源组
 
 3. **IoT Hub name**输入一个独一无二的的名称，比如`iot-lab-hub-<your-name>`，它会成为IoT hub URL的前缀：`iot-lab-hub-<your-name>.azure-devices.net`
 
@@ -61,7 +41,7 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 6. 回到**Internet of Things**分类中选择**IoT Hub Device Provisioning Service**点击**Create**开启创建向导
 
-7. **Subscription**和**Resource group**分别选择实验订阅和新建的资源组
+7. **Subscription**和**Resource group**分别选择实验订阅和资源组
 
 8. **Name**输入一个独一无二的名称，比如`iot-lab-dps-<your-name>`，它会成为IoT hub DPS URL的前缀：`iot-lab-dps-<your-name>.azure-devices-provisioning.net`
 
@@ -139,13 +119,43 @@ Azure IoT Explorer是一个跨平台的Azure IoT hub调试工具。它通过IoT 
 
 ### 5）使用Azure IoT Explorer获取原始数据
 
-在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放。这里使用Azure IoT Explorer调试工具观察蜂窝网关发送的原始数据。
+在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放。我们可以使用SDK或者调试工具来观察蜂窝网关发送的原始数据。为了避免安装软件，本节实验我们使用Azure Portal上的**Azure Cloud Shell**中的AZ CLI命令进行演示：
 
-1. 打开创建的IoT Hub，左侧导航栏中点开**Security Settings**类别中的**Shared access polices**，在右侧打开的界面中点击**iothubowner** Policy Name，复制第三行**Primary conneciton string**
+> 💡由于Azure Cloud Shell需要用到Azure Storage/File Share才存储文件和日志信息，只有第一次激活的时候的才会有下面的配置Storage的步骤。
 
-2. 打开本地安装好的Azure IoT Explorer工具，点击**Add connection**，将上一步复制的内容贴到对话框中，点击**Save**保存
+1. 在Portal上方蓝色状态条上找到命令行的图标，点击启动**Azure Cloud Shell**。
 
-3. 在打开的设备列表中找到IoT Hub中的设备，在左侧导航栏点击第三行**Telemetry**，再点击右边**Start**开始从IoT Hub内置的Event Hub中获取新发送上来的数据
+    ![](./images/shell.png)
+
+2. 选择**Bash**进入后在点击**Show advanced settings**进入配置窗口
+    
+3. **Subscription**和**Resource group**分别选择实验订阅和资源组
+
+4. **Cloud Shell region**选择`East Asia`
+
+5. **Storage account**选择**Use existing**，在下拉框中选中之前创建的`iot-lab-storage-<your-name>`
+
+6. **File share**输入任意名称，点击**Create Storage**开始创建Cloud Shell
+
+7. Cloud Shell创建完成后会停留在终端上，我们输入AZ CLI命令来查看，输入命令
+
+    `az iot hub monitor-events -n <your-iot-hub-name> -d <your-device>`
+
+8. 第一使用该命令会提示需要安装azure-iot扩展，输入多次**y**确认继续安装
+
+9. 安装完成后等待出现提示字符串`Starting event monitor, filtering on device: <your-device>, use ctrl-c to stop...`，等待片刻会将收到的数据打印在Cloud Shell终端：
+
+```
+{
+    "event": {
+        "origin": "<your-device>",
+        "module": "",
+        "interface": "",
+        "component": "",
+        "payload": "{\"common\":{\"tsp\":[0,22,6,8,18,57,40],\"did\":\"89860476262091398282\",\"gnss\":{\"vld\":false,\"lon\":0,\"lat\":0,\"alt\":0,\"sat\":0,\"hdop\":0}},\"type\":\"cycDev\",\"payload\":{\"soc\":0,\"csq\":23,\"extV\":12.630000114440918,\"lockSt\":false,\"altTime\":120360}}"
+    }
+}
+```
 
 ## 📚扩展阅读
 
