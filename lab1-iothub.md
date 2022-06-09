@@ -57,7 +57,7 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 
 3. 回到IoT Hub DPS服务，左侧导航栏选择**Certificates**，点击**Add**
 
-4. 在打开的窗口中，**Certificate name**填写一个名称，比如`iot-lab-root`，选择实验指南根本目录下的[root.pem](resources/RootCA.cer)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书
+4. 在打开的窗口中，**Certificate name**填写一个名称，比如`iot-lab-root`，选择实验指南根本目录下的[RootCA.cer](resources/RootCA.cer)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书
 
    > 💡勾选**Set certificate status to verified on upload**省略随机数密钥挑战的步骤，但这样做法需要你确认上传的证书是绝对可信的。
 
