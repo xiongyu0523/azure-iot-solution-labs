@@ -10,7 +10,7 @@
 
 ### ❔NoSQL数据库
 
-NoSQL的解释为**Not Only SQL database**，泛指不同与传统的关系型的数据库的，以其他非表格形式存储数据的数据库，主要类型包括文档、KV键值、列和图形数据库四大类，它们提供了更加贴近应用特点的方式存储和访问数据，通常可以比SQL数据库更加灵活，也更容易横向扩展。NoSQL数据库对于数据的格式和他们之间的关系相比SQL数据库要宽松得多，使用JSON/BSON等半结构化的形式记录，更有利于数据模型伴随应用的需求作出改变，而SQL数据库在设计之处就要考虑到所有数据之间的关联，它可以更好的保证数据的完整性但是要重构数据模型相对困难。在现代Web应用中，NoSQL已经非常流行。同时，NoSQL数据库也非常适合IoT的场景。
+NoSQL的解释为**Not Only SQL database**，泛指不同于传统关系型的数据库的数据库，主要类型包括文档、KV键值、列和图形数据库四大类，它们提供了更加贴近应用特点的方式存储和访问数据，通常可以比SQL数据库更加灵活，也更容易横向扩展。NoSQL数据库对于数据的格式和他们之间的关系相比SQL数据库要宽松得多，使用JSON/BSON等半结构化的形式记录，更有利于数据模型伴随应用的需求作出改变，而SQL数据库在设计之处就要考虑到所有数据之间的关联，它可以更好的保证数据的完整性但是要重构数据模型相对困难。在现代Web应用中，NoSQL已经非常流行。同时，NoSQL数据库也非常适合IoT的场景。
 
 ### ❔IoT应用数据的特点
 
@@ -18,11 +18,11 @@ IoT典型应用的数据类型包括遥测数据，报警事件，设备的metad
 
 1. IoT设备种类和数据源丰富多样，数据格式和关系很难在应用设计之处就完全敲定
 
-2. IoT场景中最重要的Telemetry遥测数据是一种写操作频繁，无需修改的数据类型
+2. IoT场景中最重要的Telemetry遥测数据是一种写操作频繁且很少需要修改的数据类型
 
 3. IoT遥测数据是弱关联的，通常它已经嵌入了所有的信息，很少需要关联其他数据项
 
-4. IoT遥测数据通常有批量聚合和处理的需求，时间轴可能跨度很大，数据量庞大。
+4. IoT遥测数据通常有批量聚合和处理的需求，时间轴可能跨度很大，数据量庞大
 
 5. IoT设备可能从全球不同地区接入进行大量的数据的写入，对于数据的延迟和同步有较为苛刻的要求
 
@@ -46,7 +46,7 @@ Azure Cosmos DB是一个全托管的全球分布式多模型NoSQL数据库，它
 
 - Table API: 兼容Azure Table Storage的KV键值操作源语
 
-其中Azure Cosmos DB SQL(Core) API是Azure Cosmos DB的原生接口，其他API都是通过转接协议实现兼容的接口。使用这些API可以最大限度复用开发者已经掌握的知识、工具和代码，同时又能享受到Cosmos DB的卓越的性能和高靠性。不过，当你的应用是从头开始编写，没有特别理由要兼容其他NoSQL数据库API时，使用SQL(Core) API才是最正确的选择。而在本实验中我们更是只用到Cosmos DB非常非常小的一部分能力，因此只后面部分只聚焦在SQL(Core) API相关的概念和使用。
+其中Azure Cosmos DB SQL(Core) API是Azure Cosmos DB的原生接口，其他API都是通过转接协议实现兼容的接口。使用这些API可以最大限度复用开发者已经掌握的知识、工具和代码，同时又能享受到Cosmos DB的卓越的性能和高靠性。不过，当你的应用是从头开始编写，没有特别理由要兼容其他NoSQL数据库API时，使用SQL(Core) API才是最正确的选择。而在本实验中我们更是只用到Cosmos DB非常非常小的一部分能力，因此后面部分只聚焦在SQL(Core) API相关的概念和使用。
 
 SQL API，顾名思义，可以使用SQL作为查询语言，不需要掌握任何新的查询语言和SDK，直接可以利用NoSQL数据库的特性，这点极大的方便了传统SQL数据库的开发者，降低了学习成本。
 
@@ -141,7 +141,7 @@ Function App的binding功能支持Cosmos DB Trigger/Input/Output，大大简化�
 
 ### 3）写遥测数据到Cosmos DB
 
-有了上一个实验中获取温湿度值和device id的代码段，再加上一个进入IoT hub的时间戳的metadata数据，我们只要把这些数据整打包成JSON格式的item，通过Binding声明的变量**outputDocument**传递出去即可。
+有了上一个实验中获取温湿度值和device id的代码段，再加上一个进入IoT hub的时间戳的metadata数据，我们只要把这些数据打包成JSON格式的item，通过Binding声明的变量**outputDocument**传递出去即可。
 
 复制下面代码到Function中保存，观察Application Insight日志记录
 
@@ -204,7 +204,7 @@ module.exports = async function (context, IoTHubMessages) {
     SELECT * FROM c WHERE c.deviceid = "<your-deviceid>" AND (c.arrived between "<start-time>" AND "<end-time>")
     ```
 
-    > 💡以上分别是查询Cosmos DB的两种数据读取方式，通过REST API单点读和SQL查询批量读取，他们的应用场景不同，消耗的RU也是不同的，大多数的重在读取的应用会结合两者进行，以平衡成本和效能。
+    > 💡以上分别是查询Cosmos DB的两种数据读取方式，通过REST API单点读和SQL查询批量读取，他们的应用场景不同，消耗资源也是不同的，大多数的应用会结合两者进行，以平衡成本和效能。
 
 ## 📚扩展阅读
 

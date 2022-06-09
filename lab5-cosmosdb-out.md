@@ -16,7 +16,7 @@ Function App binding支持HTTP Request作为Trigger触发Function执行，并通
 
 2. 在打开的窗口中，选择`Develop in Portal`，**Template**选择`HTTP Trigger`
 
-3. **New Function**输入一个该Function App中独立无二的的名称，比如`func_http`
+3. **New Function**输入一个名称，比如`func_http`
 
 4. **身份验证级别**处选择`Anonymous`，点击**Create**创建Function
 

@@ -2,7 +2,7 @@
 
 ## 🎯实验目的
 
-本节实验你将学习到Azure Function App基础知识。自己动手在Azure Portal上使用javascript语言编写一个Function，处理蜂窝网关并上传到IoT Hub的原始数据，再根据CAN协议解析成可读的格式。同时获取device id为后面存储到数据库作准备。
+本节实验你将学习到Azure Function App基础知识。自己动手在Azure Portal上使用javascript语言编写一个Function，处理蜂窝网关并上传到IoT Hub的原始数据，再根据CAN协议解析成可读的格式。同时获取device id为后面存储到数据库做准备。
 
 ![](images/lab3.png)
 
@@ -12,13 +12,13 @@
 
 在云原生架构设计演进的过程上，事件驱动和函数既应用（FaaS，Function As a Service）的编程模式是一个热门的方向和分支，也可以称为Serverless无服务架构。这种模式充分利用现代容器技术和云平台提供的能力，让开发者只需关注核心业务逻辑的实现，省去基础设施和高可用等复杂又无法为业务增值的工作，同按需分配和使用云资源的运行方式，可以在有效降低成本的同时还能获得很好的弹性。无服务设计模式是平台既应用（PaaS，Platform As a Service）的最佳伙伴，通过平台提供的各种触发器和内置的连接能力，用户仅在他们关心的事件和数据产生的时刻才介入，编写一个无状态、单一功能的函数，实现具体的业务逻辑。
 
-> 💡无服务设计模式也不是所有场景都有优势，对于需要长时间运行的逻辑代码、依赖于内部状态进行处理的应用，以及冷启动有极短需求的情况，使用传统的长时间运行的计算服务可能更合适。
+> 💡无服务设计模式也不是所有场景都有优势，对于需要长时间运行的逻辑代码，依赖于内部状态进行处理的应用，以及冷启动有极短需求的情况，使用传统的长时间运行的计算服务可能更合适。
 
 > 💡PaaS + FaaS的设计模式很适合专注于实现业务增值的IoT开发者。他们的技术背景可能偏硬件和嵌入式系统设计，而非IT或者云计算领域，使用这样的搭配可以快速实现满足功能需求，又能满足规模化部署的性能要求。
 
 ### ❔什么是Function App
 
-Azure Function App是在上Azure上实现无服务架构的核心服务，它与Azure其他服务紧密集成，通常作为下游处理引擎处理具体的业务，比如Web API后端实现，文件上传后的处理，响应数据库更改，计划任务定时运行和IoT hub数据流转换等场景都可以使用Function App来完成。
+Function App是Azure上实现无服务架构的核心业务。它与Azure其他服务紧密集成，通常作为下游处理引擎处理具体的业务，比如Web API后端实现，文件上传后的处理，响应数据库更改，计划任务定时运行和IoT hub数据流转换等场景都可以使用Function App来完成。
 
 Function App Runtime支持在Windows或者Linux操作系统，用户可以使用C#、Java、JavaScript、Python和PowerShell编写自己的代码，甚至通过custom handler使用其他不被原生支持的语言，比如Go和Rust。
 
@@ -78,7 +78,7 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 |**name**|字符串表示变量名，将作为参数传入Function，当存在多个Binding时，按照他们声明的顺序传递|
 |**direction**|Trigger和Input binding是**in**，Output binding是**out**|
 |**connection**|字符串是该Binding连接服务的connection string变量名，它的值存储在applciation settings中|
-|**cardinality**|一个IoT hub/Event hub Trigger特有的字段，`many`表示一次触发可以是包含了多条数据，此时IoTHubMessages参数是一个Array类型，每个元素都是一个JSON字符串，`one`表示一次触发只包喊一条数据，此时IoTHubMessages是一个被parse后的对象|
+|**cardinality**|一个IoT hub/Event hub Trigger特有的字段，`many`表示一次触发可以是包含了多条数据，此时IoTHubMessages参数是一个Array类型，每个元素都是一个JSON字符串，`one`表示一次触发只包含一条数据，此时IoTHubMessages是一个被parse后的对象|
 |**consumerGroup**|一个IoT hub/Event hub Trigger特有的字段，告诉Binding从哪一个消费组中读取消息，消费组可以在[IoT Hub endpoint](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-read-builtin)页面配置|
 
 
@@ -90,7 +90,7 @@ Trigger和Binding的声明写每个Function文件夹下的function.json中，下
 
 2. **Subscription**和**Resource group**分别选择实验订阅和资源组
 
-3. **Function App name**输入一个独立无二的的名称，比如`iot-lab-function-app-<your-name>`，它会成为Function App URL的前缀：`iot-lab-function-app-<your-name>.azurewebsites.net`
+3. **Function App name**输入一个独一无二的的名称，比如`iot-lab-function-app-<your-name>`，它会成为Function App URL的前缀：`iot-lab-function-app-<your-name>.azurewebsites.net`
 
 4. **Publish**选择`Code`
 

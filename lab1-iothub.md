@@ -59,7 +59,7 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 
 4. 在打开的窗口中，**Certificate name**填写一个名称，比如`iot-lab-root`，选择实验指南根本目录下的[root.pem](resources/RootCA.cer)证书并勾选**Set certificate status to verified on upload**，点击**Save**上传并信任证书
 
-   > 💡勾选**Set certificate status to verified on upload**省略随机数密钥挑战的步骤，但这样做法需要你确认上传证书的是绝对可信的。
+   > 💡勾选**Set certificate status to verified on upload**省略随机数密钥挑战的步骤，但这样做法需要你确认上传的证书是绝对可信的。
 
 5. 回到IoT Hub DPS服务，左侧导航栏选择**Manage enrollments**，点击**Add enrollment group**
 
@@ -107,7 +107,7 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 
 这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，使设备能连接到上一步创建的IoT hub DPS服务。
 
-1. 启动实验箱电源，连接PC到`AzLektec-XXX`的WiFi热点，密码为`azurelektec`
+1. 启动实验箱电源，连接PC到`AzLek_XX`的WiFi热点，密码为`azurelektec`
 
 2. 使用浏览器打开`192.168.4.1`进入配置网页服务器
 
@@ -117,11 +117,11 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 
     > 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，你也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
 
-### 5）使用Azure IoT Explorer获取原始数据
+### 5）使用Azure Cloud Shell和Azure Cli获取原始数据
 
 在默认的情况下，IoT Hub将它所有收到的遥测数据自动存入内置的Event Hub终结点中。Event Hub是一个消息队列服务，它最多支持缓存近7天的数据以供客户端读取和回放。我们可以使用SDK或者调试工具来观察蜂窝网关发送的原始数据。为了避免安装软件，本节实验我们使用Azure Portal上的**Azure Cloud Shell**中的AZ CLI命令进行演示：
 
-> 💡由于Azure Cloud Shell需要用到Azure Storage/File Share才存储文件和日志信息，只有第一次激活的时候的才会有下面的配置Storage的步骤。
+> 💡由于Azure Cloud Shell需要用到Azure Storage/File Share才存储文件和日志信息，只有第一次激活的时候才会有下面的配置Storage的步骤。
 
 1. 在Portal上方蓝色状态条上找到命令行的图标，点击启动**Azure Cloud Shell**。
 
