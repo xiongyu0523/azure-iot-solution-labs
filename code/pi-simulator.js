@@ -116,5 +116,5 @@ client.open(function (err) {
   client.onDeviceMethod('start', onStart);
   client.onDeviceMethod('stop', onStop);
   client.on('message', receiveMessageCallback);
-  setInterval(sendMessage, 2000);
+  setInterval(sendMessage, 60000);
 });
