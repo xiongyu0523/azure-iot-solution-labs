@@ -49,7 +49,7 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 
 10. 点击**Review + Create**->**Create**创建IoT Hub DPS服务
 
-### 3）配置IoT Hub DPS服务
+### 2）配置IoT Hub DPS服务
 
 1. 进入刚刚创建的IoT Hub DPS服务，左侧导航栏选择**Linked IoT hubs**，点击**Add**
 
@@ -103,7 +103,7 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 
 14. **Enable entry**保持`Enable`，点击**Save**创建enrollment group
 
-### 4）配置蜂窝网关连接IoT Hub
+### 3）配置蜂窝网关连接IoT Hub
 
 这一步通过使用蜂窝网关自带的网页服务器配置IoT Hub DPS ID Scope，使设备能连接到上一步创建的IoT hub DPS服务。
 
@@ -116,6 +116,12 @@ Device Twin顾名思义是设备在云上的孪生体，也可以成为设备影
 4. 关闭电源重启蜂窝网关
 
     > 💡实验用的每一个蜂窝网关已经预置了独有的ECC私钥和证书，你也可以使用第三方CA签发的设备证书，或者使用OpenSSL在本地生成用于测试目的的根证书和设备证书/私钥。在上一步中导入自己的根证书（而非实验提供的根证书），并通过配置网页服务器上传设备证书/私钥到自己的设备上。
+
+### 4) 使用Pi Simulator连接IoT Hub
+
+当没有蜂窝网关的时候你也可以使用[Pi-Simulator](https://azure-samples.github.io/raspberry-pi-web-simulator)来模拟蜂窝网关你的数据格式，代码在[这里](code/pi-simulator.js)。
+
+> 在使用Pi-Simulator的时候直接连接IoT Hub，你需要手动在IoT Hub中创建一个设备，复制它的**Primary Connection String**粘贴到代码的connectionString。
 
 ### 5）使用Azure Cloud Shell和Azure Cli获取原始数据
 
