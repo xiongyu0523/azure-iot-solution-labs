@@ -4,13 +4,23 @@
 
 本节实验你将实现一个REST API，控制蜂窝网关CAN总线上接入的I/O模块控制继电器和LED动作模拟远程锁车开锁的场景。通过本实验你可以学习IoT Hub控制设备的几种方法和IoT SDK的更新device twin的相关代码，同时了解如何在Azure Function中添加依赖模块调用（任意）SDK进行特定目的的开发。
 
-蜂窝网关默认使用IoT Hub device twin的desired property同步设备I/O动作，并定义了twin协议格式：
+![](images/lab7.png)
+
+蜂窝网关默认使用IoT Hub Device Twin的desired property同步设备I/O状态，定义了下面Device Twin协议格式用于分别控制4路I/O：
 
 ```json
-{ "desired": { "devconfig": { "Lock1": true  } } }
+{
+    "desired": { 
+        "devconfig": { 
+            "Lock1": true,
+            "Lock2": false,
+            "Lock3": false,
+            "Lock4": false
+        } 
+    } 
+}
 ```
 
-![](images/lab7.png)
 
 ## 📑基础阅读
 
@@ -29,21 +39,21 @@ IoT Hub支持三种不同的方式实现云到设备的控制执行，分别是*
 
 ### 1）创建并测试HTTP Trigger Function
 
-1. 在Portal上创建一个默认的HTTP Trigger Function，详细操作可以参照实验5中的[步骤](./lab5-cosmosdb-out.md###-1）创建并测试HTTP-Trigger-Function)
+1. 在Portal上创建一个默认的HTTP Trigger Function，详细操作可以参照实验5中的[步骤](./lab5-cosmosdb-out.md###-1）创建并测试HTTP-Trigger-Function)。
 
-2. 修改Trigger binding的**Route template**为`{device}/control/{lockn}/{onoff}`，方法保留`PUT`，详细操作可以参照实验5中的[步骤](./lab5-cosmosdb-out.md###-2）修改route路径和支持的HTTP方法)
+2. 修改Trigger binding的**Route template**为`{device}/control/{lockn}/{onoff}`，方法保留`PUT`，详细操作可以参照实验5中的[步骤](./lab5-cosmosdb-out.md###-2）修改route路径和支持的HTTP方法)。
 
 ### 2）安装IoT SDK依赖库
 
 通过Portal创建的Function中只是一个简单的index.js，要使用Azure IoT Node.js SDK需要先在项目中安装依赖库。
 
-1. 返回Function App服务主页面，左侧导航栏在**Development Tools**下选择**Advanced Tools**，点击 **Go->** 进入**Kudu**网页文件管理页面
+1. 返回Function App服务主页面，左侧导航栏在**Development Tools**下选择**Advanced Tools**，点击 **Go->** 进入**Kudu**网页文件管理页面。
 
-2. 上面选择**Debug console**->**CMD**，进入文件系统
+2. 上面选择**Debug console**->**CMD**，进入文件系统。
 
-3. 点击目录**site**->**wwwroot**进入Function文件根目录
+3. 点击目录**site**->**wwwroot**进入Function文件根目录。
 
-4. 在CMD中输入`npm init`开始npm包项目创建向导。首先输入任意项目名称，其他内容按回车键略过，完成后可以看到文件目录中多出了npm包工程的package.json文件
+4. 在CMD中输入`npm init`开始npm包项目创建向导。首先输入任意项目名称，其他内容按回车键略过，完成后可以看到文件目录中多出了npm包工程的package.json文件。
 
 5. 继续在CMD中输入`npm install azure-iothub`开始下载安装Azure IoT Node.js SDK以及它的依赖包，等待几分钟，CMD中可以看到完成提示信息，此时再点开**package.json**可以看到依赖已经更新：
 
@@ -53,21 +63,23 @@ IoT Hub支持三种不同的方式实现云到设备的控制执行，分别是*
     }
     ```
 
-> 💡当在做Azure Function本地开发时，工具可以把本地安装的npm package在部署的时候自动同步上去，不用麻烦用户再进入Kudu后台手动安装
+> 💡当你在做Azure Function本地开发时，工具可以把本地安装的npm package在部署的时候自动同步上去，不用麻烦的再进入Kudu后台手动安装。
 
-### 3）增加IoT hub connection string的环境变量
+### 3）增加IoT hub Connection String环境变量
 
-在Function代码使用IoT SDK需要获得IoT hub的API授权，这里需要用到在实验1的[最后一步](./lab1-iothub.md###-5）使用Azure-IoT-Explorer获取原始数据)中取得的Connection string。为了避免在代码中直接存储机密信息，通常的做法是将其保存为一个**Application Settings**环境变量供给Function访问。
+当我们在Function代码使用IoT SDK的时候需要获得IoT hub的API授权，这里需要用到IoT Hub **Service Connection String**。为了避免在代码中直接存储机密信息，通常的做法是将其保存为一个**Application Settings**环境变量供给Function访问。
 
-1. 返回Function App服务主页面，左侧导航栏在**Settings**下选择**Configurfation**，在打开的窗口中点击 **+New Applicaiton setting** 按钮新增一个环境变量
+1. 进入之前创建的IoT hub服务，左侧导航栏在**Security settings**下选择**Shared access policies**，在新开的页面中点击 **iothubowner**，再从新开页面中复制**Primary connection string**。
 
-2. **Name**输入变量名`IOTHUB_CONNECTION_STRING`（稍后在代码中会用到），**Value**输入复制的Connection string，点击**OK**后，再点击**Save**保存
+2. 返回Function App服务主页面，左侧导航栏在**Settings**下选择**Configurfation**，在打开的窗口中点击 **+New Applicaiton setting** 按钮新增一个环境变量。
 
-> 💡除了使用SAS的方式，IoT hub和Azure Function之间还支持使用Managed Identity通过Azure AD的RBAC方式进行认证和授权
+3. **Name**输入变量名`IOTHUB_CONNECTION_STRING`（稍后在代码中会用到），**Value**输入复制的Connection string，点击**OK**后，再点击**Save**保存。
+
+> 💡除了使用SAS的方式，IoT hub和Azure Function之间还支持使用Managed Identity通过Azure AD的RBAC方式进行认证和授权。
 
 ### 4）编写Function代码操作开锁
 
-根据协议编写Function代码，代码使用IoT SDK访问device registry更新twin的实现对锁的控制。代码如下，复制到index.js，点击**Save**保存
+根据协议编写Function代码，代码使用IoT SDK访问device registry更新Device Twin的实现对锁的控制。代码如下，复制到index.js，点击**Save**保存。
 
 ```javascript
 // 载入IoT SDK模块

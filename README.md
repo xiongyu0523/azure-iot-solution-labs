@@ -14,17 +14,16 @@
 
 ## 👥训练营目标人群
 
-- 👨‍🔬物联网架构师，了解如何基于Azure PaaS的搭建服务端架构。
-- 👨‍💻物联网开发工程师，了解如何使用Azure PaaS服务进行物联网应用开发。
-- 🧕物联网产品经理，了解Azure IoT服务基础知识，寻找商业合作伙伴。
+- 👨‍🔬物联网架构师 - 了解如何基于Azure PaaS的搭建服务端架构。
+- 👨‍💻物联网开发工程师 - 了解如何使用Azure PaaS服务进行物联网应用开发。
+- 🧕物联网产品经理 - 了解Azure IoT服务基础知识，寻找商业合作伙伴。
 
 ## 📖准备事项
 
-- ✅笔记本电脑，安装最新版本[Azure IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases)工具。
-- ✅提前准备好[Azure.com](azure.com)的账号和订阅。
-- ✅一点点JavaScript/Node.js的知识。
+- ✅笔记本电脑
+- ✅[Azure.com](azure.com)的账号和付费订阅
   
-> 💡免费订阅，虽然大部分实验资源是免费额度，但是仍有部分资源无法在免费订阅中使用。
+> 💡虽然大部分实验用的资源都有免费额度，但**无法使用Free Subscription**完成所有实验。
 
 ## 🧪实验指南
 
